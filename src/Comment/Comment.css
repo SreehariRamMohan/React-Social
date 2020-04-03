@@ -1,0 +1,24 @@
+.postedCommentPhoto {
+    width: 300px;
+    border-radius: 150px;
+  }
+
+  .postedCommentContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .postedCommentInput {
+    width: 100%;
+    height: 2em;
+    background-color: #f8f8f8;
+    font-size: 2em;
+    border-radius: 1em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+
+  }
+ 

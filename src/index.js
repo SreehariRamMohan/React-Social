@@ -6,11 +6,24 @@ import * as serviceWorker from './serviceWorker';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 
-import {TYPING, PUBLISH_POST, CLEAR_MESSAGE} from "./actions"
+import {TYPING, PUBLISH_POST, CLEAR_MESSAGE, PUBLISH_COMMENT, CLEAR_COMMENT, TYPING_COMMENT} from "./actions"
+
+
+/*
+messages array contains 
+[
+  {
+    key: 3,
+    message:"this is a message",
+    comments: ["comment 1", "comment 2"]
+  }
+]
+*/
 
 const initialState = {
   messages: [],
-  message: ""
+  message: "",
+  comment: "",
 }
 
 function reducer(state = initialState, action) {
@@ -20,18 +33,56 @@ function reducer(state = initialState, action) {
     case PUBLISH_POST:
       return {
         ...state,
-        messages: [state.message, ...state.messages]
+        messages: [
+        {
+          key: action.key,
+          message: state.message,
+          comments: []
+        }
+        , ...state.messages]
       }
+
+      case PUBLISH_COMMENT:
+        console.log(action.comment + "==" + action.key)
+        return {
+          ...state, 
+          messages: state.messages.map((item, index) => {
+            if(item.key === action.key) {
+              console.log("found relevant message")
+              return {
+                ...item,
+                comments: [...state.messages[index].comments, action.comment]
+              }
+            }
+            
+            return item;
+            
+          })
+        }
+        
+
     case TYPING:
       return {
         ...state,
         message: action.message
       }
 
+    case TYPING_COMMENT: 
+      return {
+        ...state,
+        comment: action.comment
+      }
+
     case CLEAR_MESSAGE: 
       return {
         ...state,
         message: ""
+      }
+
+    case CLEAR_COMMENT:
+      return {
+        ...state,
+        comment: ""
       }
 
     default:

@@ -1,4 +1,11 @@
-.card {
+.post-wrapper {
+  width: 100%;
+  padding-left: 3em;
+  padding-right: 3em;
+  margin-left: 0em;
+}
+
+.card-post {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     display: flex;
     flex-direction: column;
@@ -6,35 +13,85 @@
     align-items: flex-start;
     width: 100%;
     text-align: left;
-    padding: 1em;
-    
     margin-top: 2em;
+    padding: 1em;
   }
-  
-  .postContainer {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    width: 100%
+
+
+  .dividePostAndComments {
+    width: 90vw;
+    height: 1px;
+    border: 1;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
   }
-  
+
+
   .profilePost {
     width: 300px;
     border-radius: 150px;
   }
+
   
-  .postInput {
-    width: 100%;
-    height: 2em;
-    padding: 12px 20px;
-    box-sizing: border-box;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    background-color: #f8f8f8;
-    resize: none;
-    font-size: 2em;
+  .outerPostContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 0.5em;
+  }
+
+  .innerPostContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: "center";
+    padding: 0;
     margin-left: 0.5em;
   }
   
+  .postedInput {
+    width: 100%;
+    height: 2em;
+    background-color: #f8f8f8;
+    font-size: 2em;
+  }
+  
+  .posterName {
+    padding: 0em;
+    margin: 0em;
+
+    margin-bottom: 0.25em;
+  }
+
+  .posterDate {
+    padding: 0em;
+    margin: 0em;
+    color: darkgrey;
+  }
+
+  .commentPhoto {
+    width: 300px;
+    border-radius: 150px;
+  }
+
+  .commentContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .commentInput {
+    width: 100%;
+    height: 2em;
+    background-color: #f8f8f8;
+    font-size: 2em;
+    border-radius: 1em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+
+  }
  

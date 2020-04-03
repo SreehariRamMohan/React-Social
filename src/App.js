@@ -25,12 +25,14 @@ class App extends React.Component {
   }
 
   handleTextChange(event) {
-    console.log(event.target.value);
+    //console.log(event.target.value);
     this.props.dispatch(typed_message(event.target.value));
   }
 
   postButton() {
-    this.props.dispatch(post_message())
+    var post_key = this.props.messages.length;
+    console.log("Post key is " + post_key);
+    this.props.dispatch(post_message(post_key))
     this.props.dispatch(clear_message())
   }
 
@@ -48,6 +50,7 @@ class App extends React.Component {
               <textarea onChange={this.handleTextChange}
                 className="postInput"
                 value={this.props.message}
+                placeholder="What's on your mind?"
               />
             </div>
 
@@ -63,7 +66,7 @@ class App extends React.Component {
           </div>
 
           {
-            this.props.messages.map((message) => <Post messageContent={message} />)
+            this.props.messages.map((message, index) => <Post messageContent={message.message} key={index} key_index={index}/>)
           }
 
         </header>
