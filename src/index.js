@@ -3,11 +3,50 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+
+import {TYPING, PUBLISH_POST, CLEAR_MESSAGE} from "./actions"
+
+const initialState = {
+  messages: [],
+  message: ""
+}
+
+function reducer(state = initialState, action) {
+  console.log("reducer", state, action)
+
+  switch (action.type) {
+    case PUBLISH_POST:
+      return {
+        ...state,
+        messages: [state.message, ...state.messages]
+      }
+    case TYPING:
+      return {
+        ...state,
+        message: action.message
+      }
+
+    case CLEAR_MESSAGE: 
+      return {
+        ...state,
+        message: ""
+      }
+
+    default:
+      return state;
+  }
+}
+
+const store = createStore(reducer);
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Provider store={store}>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </Provider>,
   document.getElementById('root')
 );
 

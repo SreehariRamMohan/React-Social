@@ -15,7 +15,7 @@ class Post extends React.Component {
                     <textarea onChange={this.handleTextChange}
                         className="postInput"
                         value={this.props.messageContent}
-                        readonly
+                        readOnly
                     />
                 </div>
             </div>
