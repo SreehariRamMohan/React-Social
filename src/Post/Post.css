@@ -74,6 +74,7 @@
   .commentPhoto {
     width: 300px;
     border-radius: 150px;
+    margin-right: 0.5em;
   }
 
   .commentContainer {

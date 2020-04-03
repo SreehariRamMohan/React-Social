@@ -29,7 +29,6 @@ class Post extends React.Component {
     handleKeyPress(event) {
         var keyCode = event.charCode;
 
-
         if (keyCode === 13) {
             console.log("enter pressed on comment" + event.target.value + " " + this.props.key_index);
 
@@ -37,14 +36,14 @@ class Post extends React.Component {
             this.props.dispatch(post_comment(event.target.value, this.props.key_index))
 
             //clear the comments currently being displayed
-            this.props.dispatch(clear_comment());
+            this.props.dispatch(clear_comment(this.props.key_index));
 
         }
 
     }
 
     commentOnChange(event) {
-        this.props.dispatch(typed_comment(event.target.value));
+        this.props.dispatch(typed_comment(event.target.value, this.props.key_index));
     }
 
     generateComments(messages, indexToFind) {
@@ -67,7 +66,7 @@ class Post extends React.Component {
 
                     <div className="innerPostContainer">
                         <p className="posterName">Sreehari Rammohan</p>
-                        <p className="posterDate">April 2 at 7:51 PM</p>
+                        <p className="posterDate">{this.props.date}</p>
                     </div>
 
 
@@ -89,9 +88,9 @@ class Post extends React.Component {
                 <div className="commentContainer">
                     <img className="commentPhoto" src={comment_photo}></img>
                     <textarea onKeyPress={this.handleKeyPress} onChange={this.commentOnChange}
-                        placeholder="write a comment..."
+                        placeholder={"write a comment..." + this.props.key_index}
                         className="commentInput"
-                        value={this.props.comment}></textarea>
+                        value={this.props.messages[this.props.key_index].comment}></textarea>
                 </div>
 
 

@@ -12,17 +12,19 @@ export function typed_message(message) {
     }
 }
 
-export function typed_comment(comment) {
+export function typed_comment(comment, key) {
     return {
         type: TYPING_COMMENT,
+        key: key,
         comment: comment
     }
 }
 
-export function post_message(post_key) {
+export function post_message(post_key, post_date) {
     return {
         type: PUBLISH_POST,
-        key: post_key
+        key: post_key,
+        date: post_date
     }
 }
 
@@ -32,9 +34,10 @@ export function clear_message() {
     }
 }
 
-export function clear_comment() {
+export function clear_comment(key) {
     return {
-        type: CLEAR_COMMENT
+        type: CLEAR_COMMENT,
+        key: key
     }
 }
 

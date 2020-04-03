@@ -14,12 +14,13 @@ import produce from "immer"
 enableAllPlugins()
 
 /*
-messages array contains 
+messages Array contains 
 [
   {
     key: 3,
     message:"this is a message",
     comments: ["comment 1", "comment 2"]
+    comment: ""
   }
 ]
 */
@@ -43,7 +44,9 @@ function reducer(state = initialState, action) {
         draft.messages.push({
           key: action.key,
           message: draft.message,
-          comments: []
+          date: action.date,
+          comments: [],
+          comment: ""
         })
         return draft;
       }
@@ -59,7 +62,7 @@ function reducer(state = initialState, action) {
         return draft;
       }
       case TYPING_COMMENT: {
-        draft.comment = action.comment;
+        draft.messages[action.key].comment = action.comment;
         return draft;
       }
       case CLEAR_MESSAGE: {
@@ -67,7 +70,13 @@ function reducer(state = initialState, action) {
         return draft;
       }
       case CLEAR_COMMENT: {
-        draft.comment = "";
+        console.log("**IN CLEAR", action.key)
+        for(var i = 0; i < draft.messages.length; i++) {
+          if(draft.messages[i].key === action.key) {
+            draft.messages[i].comment = ""
+          }
+        }
+        // draft.messages[action.key].comment = "";
         return draft;
       }
       default: {

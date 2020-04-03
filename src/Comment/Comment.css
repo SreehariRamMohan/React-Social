@@ -1,6 +1,7 @@
 .postedCommentPhoto {
     width: 300px;
     border-radius: 150px;
+    margin-right: 0.5em;
   }
 
   .postedCommentContainer {
@@ -9,6 +10,7 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
+    margin-bottom: 1.2em;
   }
 
   .postedCommentInput {

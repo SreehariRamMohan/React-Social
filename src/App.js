@@ -29,10 +29,34 @@ class App extends React.Component {
     this.props.dispatch(typed_message(event.target.value));
   }
 
+  getPostingDate(date) {
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; 
+    minutes = minutes < 10 ? '0'+minutes : minutes;
+    var strTime = hours + ':' + minutes + ' ' + ampm;
+
+    const month = date.toLocaleString('default', { month: 'long' });
+    const day = date.getDate();
+
+    const finalDateTime = month + " " + day + " at " + strTime
+
+    return finalDateTime;
+  }
+  
+
   postButton() {
     var post_key = this.props.messages.length;
     console.log("Post key is " + post_key);
-    this.props.dispatch(post_message(post_key))
+
+    var post_date = this.getPostingDate(new Date())
+    console.log("Posting date to display is " + post_date);
+
+
+
+    this.props.dispatch(post_message(post_key, post_date))
     this.props.dispatch(clear_message())
   }
 
@@ -66,7 +90,7 @@ class App extends React.Component {
           </div>
 
           {
-            this.props.messages.map((message, index) => <Post messageContent={message.message} key={index} key_index={index}/>)
+            this.props.messages.map((message, index) => <Post messageContent={message.message} date={message.date} key={index} key_index={index}/>)
           }
 
         </header>
