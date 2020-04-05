@@ -48,17 +48,18 @@ class App extends React.Component {
   
 
   postButton() {
-    var post_key = this.props.messages.length;
+    
+    var date = new Date();
+
+    var post_key = date.getTime();//this.props.messages.length; using the length of the messages array is a bad idea (since 2 keys can be the same). Much better to use time in millis since 1970
     console.log("Post key is " + post_key);
 
-    var post_date = this.getPostingDate(new Date())
+    var post_date = this.getPostingDate(date)
     console.log("Posting date to display is " + post_date);
 
-
-
-    this.props.dispatch(post_message(post_key, post_date))
-    this.props.dispatch(clear_message())
-    this.props.dispatch(post_message_mongo(this.props.message))
+    this.props.dispatch(post_message(post_key, post_date));
+    this.props.dispatch(clear_message());
+    this.props.dispatch(post_message_mongo(this.props.message, post_date, post_key));
   }
 
   render() {
@@ -91,7 +92,7 @@ class App extends React.Component {
           </div>
 
           {
-            this.props.messages.map((message, index) => <Post messageContent={message.message} date={message.date} key={index} key_index={index}/>)
+            this.props.messages.map((message, index) => <Post messageContent={message.message} date={message.date} key={message.key} key_index={message.key}/>)
           }
 
         </header>

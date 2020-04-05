@@ -6,7 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import { createStore, applyMiddleware} from 'redux';
 import { Provider } from 'react-redux';
 
-import {TYPING, PUBLISH_POST, CLEAR_MESSAGE, PUBLISH_COMMENT, CLEAR_COMMENT, TYPING_COMMENT} from "./actions"
+import {TYPING, PUBLISH_POST, CLEAR_MESSAGE, PUBLISH_COMMENT} from "./actions"
 
 import {enableAllPlugins} from "immer"
 import produce from "immer"
@@ -43,6 +43,7 @@ function reducer(state = initialState, action) {
   const producer = produce((draft, action) => {
     
     switch (action.type) {
+
       case PUBLISH_POST: {
         draft.messages.push({
           key: action.key,
@@ -53,6 +54,7 @@ function reducer(state = initialState, action) {
         })
         return draft;
       }
+
       case PUBLISH_COMMENT: {
         for(var i = 0; i < draft.messages.length; i++) {
           if(draft.messages[i].key === action.key) {
@@ -60,28 +62,17 @@ function reducer(state = initialState, action) {
           }
         }
       }
+
       case TYPING: {
         draft.message = action.message;
         return draft;
       }
-      case TYPING_COMMENT: {
-        draft.messages[action.key].comment = action.comment;
-        return draft;
-      }
+
       case CLEAR_MESSAGE: {
         draft.message = "";
         return draft;
       }
-      case CLEAR_COMMENT: {
-        console.log("**IN CLEAR", action.key)
-        for(var i = 0; i < draft.messages.length; i++) {
-          if(draft.messages[i].key === action.key) {
-            draft.messages[i].comment = ""
-          }
-        }
-        // draft.messages[action.key].comment = "";
-        return draft;
-      }
+
       default: {
         return draft;
       }

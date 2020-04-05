@@ -8,7 +8,7 @@ import Comment from "../Comment/Comment"
 
 import { connect } from 'react-redux';
 
-import { post_comment, typed_comment, clear_comment } from "../actions"
+import { post_comment, post_comment_mongo } from "../actions"
 
 
 function mapStateToProps(state) {
@@ -24,6 +24,12 @@ class Post extends React.Component {
         super(props)
         this.handleKeyPress = this.handleKeyPress.bind(this);
         this.commentOnChange = this.commentOnChange.bind(this);
+
+        //This is state ONLY needed for this component. Should not be pushing to Redux because it is inefficient 
+        //(no other component needs to know what the user is typing - only what they ultimately typed)
+        this.state = {
+            commentTypedSoFar: ""
+        }
     }
 
     handleKeyPress(event) {
@@ -33,17 +39,22 @@ class Post extends React.Component {
             console.log("enter pressed on comment" + event.target.value + " " + this.props.key_index);
 
             //push the comment to redux
-            this.props.dispatch(post_comment(event.target.value, this.props.key_index))
+            this.props.dispatch(post_comment(this.state.commentTypedSoFar, this.props.key_index))
+            
+            this.props.dispatch(post_comment_mongo(this.state.commentTypedSoFar, this.props.key_index))
 
-            //clear the comments currently being displayed
-            this.props.dispatch(clear_comment(this.props.key_index));
+            this.setState({
+                commentTypedSoFar: ""
+            })
 
         }
 
     }
 
     commentOnChange(event) {
-        this.props.dispatch(typed_comment(event.target.value, this.props.key_index));
+        this.setState({
+            commentTypedSoFar: event.target.value
+        })
     }
 
     generateComments(messages, indexToFind) {
@@ -90,7 +101,7 @@ class Post extends React.Component {
                     <textarea onKeyPress={this.handleKeyPress} onChange={this.commentOnChange}
                         placeholder={"write a comment..."}
                         className="commentInput"
-                        value={this.props.messages[this.props.key_index].comment}></textarea>
+                        value={this.state.commentTypedSoFar}></textarea> 
                 </div>
 
 
