@@ -3,7 +3,19 @@ const router = require('express').Router();
 let Post = require('../models/post.model');
 
 router.route('/').get((req, res) => {
-  User.find()
+  console.log("here in the axios endpoint call")
+  Post.find()
+    .then(posts => res.json(posts))
+    .catch(err => res.status(400).json("Error: " + err));
+});
+
+router.route('/fetch').get((req, res) => {
+  console.log("here in the axios endpoint call")
+  let response = {
+    bruh: "BRUH"
+  };
+
+  Post.find()
     .then(posts => res.json(posts))
     .catch(err => res.status(400).json("Error: " + err));
 });
@@ -28,14 +40,12 @@ router.route('/add').post((req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
 });
 
-router.route("/ad/comment/:postKey").post((req, res) => {
+router.route("/add/comment/:postKey").post((req, res) => {
   const comment = req.body.comment;
   const postKey = req.params.postKey;
   Post.update({"key": postKey},  { $push: { comments: comment }})
   .then(() => res.json("Adding post"))
   .catch((err) => res.status(500).json("Error" + err))
-
-
 });
 
 module.exports = router;

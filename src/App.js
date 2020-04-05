@@ -6,7 +6,7 @@ import Post from "./Post/Post"
 
 import { connect } from 'react-redux';
 
-import {typed_message, post_message, clear_message, post_message_mongo} from "./actions"
+import {typed_message, post_message, clear_message, post_message_mongo, fetch_data_from_mongo} from "./actions"
 
 function mapStateToProps(state) {
   return {
@@ -22,6 +22,11 @@ class App extends React.Component {
     super(props);
     this.handleTextChange = this.handleTextChange.bind(this);
     this.postButton = this.postButton.bind(this);
+  }
+
+  componentDidMount() {
+    console.log("Trying to fetch data in component did mount");
+    this.props.dispatch(fetch_data_from_mongo());
   }
 
   handleTextChange(event) {

@@ -78,6 +78,18 @@ export function post_comment_failure(error) {
     }
 }
 
+export function fetch_data_success(data) {
+    return {
+        type: "FETCH_DATA_SUCCESS_MONGO"
+    }
+}
+
+export function fetch_data_failure() {
+    return {
+        type: "FETCH_DATA_FAILURE_MONGO"
+    }
+}
+
 export function post_message_mongo(message, currentDate, postKey) {
     let messageToSend = {
         "message": message,
@@ -88,18 +100,18 @@ export function post_message_mongo(message, currentDate, postKey) {
     }
     return (dispatch) => {
         return axios.post("http://localhost:5000/post/add", messageToSend)
-        .then(json => {
-            dispatch(post_message_success(json))
-        })
-        .catch(error => {
-            dispatch(post_message_failure(error))
-        })
+            .then(json => {
+                dispatch(post_message_success(json))
+            })
+            .catch(error => {
+                dispatch(post_message_failure(error))
+            })
     }
 }
 
 export function post_comment_mongo(comment, postKey) {
 
-    let reqEndpoint = "http://localhost:5000/post/ad/comment/" + postKey
+    let reqEndpoint = "http://localhost:5000/post/add/comment/" + postKey
 
     console.log("**", reqEndpoint);
 
@@ -107,14 +119,36 @@ export function post_comment_mongo(comment, postKey) {
         comment: comment
     }
 
-    return(dispatch) => {
+    return (dispatch) => {
         return axios.post(reqEndpoint, payload)
-        .then(json => {
-            dispatch(post_comment_success(json))
+            .then(json => {
+                dispatch(post_comment_success(json))
+            })
+            .catch(error => {
+                dispatch(post_comment_failure(error))
+            })
+    }
+
+}
+
+export function fetch_data_from_mongo() {
+    console.log("**", "trying to fetch data from mongo");
+    return (dispatch) => {
+        return axios.get('http://localhost:5000/post/')
+        .then(function (response) {
+            // handle success
+            console.log(response);
+            dispatch(fetch_data_success(response))
         })
-        .catch(error => {
-            dispatch(post_comment_failure(error))
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+            dispatch(fetch_data_failure());
         })
+        .then(function () {
+            // always executed
+        });
     }
     
+
 }
