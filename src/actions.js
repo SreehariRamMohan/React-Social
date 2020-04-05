@@ -1,6 +1,5 @@
 const axios = require('axios');
 
-
 export const TYPING = "TYPING_MESSAGE";
 export const TYPING_COMMENT = "TYPING_COMMENT"
 export const PUBLISH_POST = "ADD_MESSAGE";
@@ -9,6 +8,7 @@ export const PUBLISH_COMMENT = "PUBLISH_COMMENT"
 export const CLEAR_COMMENT = "CLEAR_COMMENT";
 export const POST_MESSAGE_SUCCESS = "POST_MESSAGE_SUCCESS";
 export const POST_MESSAGE_FAILURE = "POST_MESSAGE_FAILURE";
+export const FETCH_DATA_SUCCESS_MONGO = "FETCH_DATA_SUCCESS_MONGO"
 
 export function typed_message(message) {
     return {
@@ -80,7 +80,8 @@ export function post_comment_failure(error) {
 
 export function fetch_data_success(data) {
     return {
-        type: "FETCH_DATA_SUCCESS_MONGO"
+        type: FETCH_DATA_SUCCESS_MONGO,
+        payload: data
     }
 }
 
@@ -138,7 +139,7 @@ export function fetch_data_from_mongo() {
         .then(function (response) {
             // handle success
             console.log(response);
-            dispatch(fetch_data_success(response))
+            dispatch(fetch_data_success(response.data))
         })
         .catch(function (error) {
             // handle error

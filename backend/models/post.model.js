@@ -3,9 +3,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const postSchema = new Schema({
-  post: String,
+  message: String,
   author: String,
-  time: String,
+  date: String,
   comments: [String],
   key: Number,
 });

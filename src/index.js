@@ -6,7 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import { createStore, applyMiddleware} from 'redux';
 import { Provider } from 'react-redux';
 
-import {TYPING, PUBLISH_POST, CLEAR_MESSAGE, PUBLISH_COMMENT} from "./actions"
+import {TYPING, PUBLISH_POST, CLEAR_MESSAGE, PUBLISH_COMMENT, FETCH_DATA_SUCCESS_MONGO} from "./actions"
 
 import {enableAllPlugins} from "immer"
 import produce from "immer"
@@ -23,7 +23,7 @@ messages Array contains
     key: 3,
     message:"this is a message",
     comments: ["comment 1", "comment 2"]
-    comment: ""
+    date: April 3 at 7:52 PM
   }
 ]
 */
@@ -50,7 +50,6 @@ function reducer(state = initialState, action) {
           message: draft.message,
           date: action.date,
           comments: [],
-          comment: ""
         })
         return draft;
       }
@@ -70,6 +69,11 @@ function reducer(state = initialState, action) {
 
       case CLEAR_MESSAGE: {
         draft.message = "";
+        return draft;
+      }
+
+      case FETCH_DATA_SUCCESS_MONGO: {
+        draft.messages = action.payload;
         return draft;
       }
 

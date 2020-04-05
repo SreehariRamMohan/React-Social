@@ -11,9 +11,6 @@ router.route('/').get((req, res) => {
 
 router.route('/fetch').get((req, res) => {
   console.log("here in the axios endpoint call")
-  let response = {
-    bruh: "BRUH"
-  };
 
   Post.find()
     .then(posts => res.json(posts))
@@ -28,9 +25,9 @@ router.route('/add').post((req, res) => {
   const comments = req.body.comments;
 
   const newPost = new Post({
-      post: message,
+      message: message,
       author: author, 
-      time: date,
+      date: date,
       key: key,
       comments: comments,
   });
