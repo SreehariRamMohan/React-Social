@@ -88,7 +88,7 @@ class Post extends React.Component {
                 <div className="commentContainer">
                     <img className="commentPhoto" src={comment_photo}></img>
                     <textarea onKeyPress={this.handleKeyPress} onChange={this.commentOnChange}
-                        placeholder={"write a comment..." + this.props.key_index}
+                        placeholder={"write a comment..."}
                         className="commentInput"
                         value={this.props.messages[this.props.key_index].comment}></textarea>
                 </div>
