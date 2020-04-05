@@ -6,7 +6,7 @@ import Post from "./Post/Post"
 
 import { connect } from 'react-redux';
 
-import {typed_message, post_message, clear_message} from "./actions"
+import {typed_message, post_message, clear_message, post_message_mongo} from "./actions"
 
 function mapStateToProps(state) {
   return {
@@ -58,6 +58,7 @@ class App extends React.Component {
 
     this.props.dispatch(post_message(post_key, post_date))
     this.props.dispatch(clear_message())
+    this.props.dispatch(post_message_mongo(this.props.message))
   }
 
   render() {

@@ -1,3 +1,6 @@
+const axios = require('axios');
+
+
 export const TYPING = "TYPING_MESSAGE";
 export const TYPING_COMMENT = "TYPING_COMMENT"
 export const PUBLISH_POST = "ADD_MESSAGE";
@@ -46,5 +49,36 @@ export function post_comment(comment, key) {
         type: PUBLISH_COMMENT,
         comment: comment,
         key: key
+    }
+}
+
+export function post_message_success(json) {
+    return {
+        type: "POST_MESSAGE_SUCCESS",
+    }
+}
+
+export function post_message_failure(error) {
+    console.log(error);
+    return {
+        type: "POST_MESSAGE_FAILURE",
+    }
+}
+
+export function post_message_mongo(message) {
+    let messageToSend = {
+        "message": message,
+        "author": "Sreehari Rammohan",
+        "date": "April 4 at 8:10 PM" 
+    }
+    return (dispatch) => {
+        return axios.post("http://localhost:5000/post/add", messageToSend)
+        // .then(res => res.json())
+        .then(json => {
+            dispatch(post_message_success(json))
+        })
+        .catch(error => {
+            dispatch(post_message_failure(error))
+        })
     }
 }

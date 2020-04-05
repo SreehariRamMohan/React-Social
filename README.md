@@ -1,3 +1,12 @@
+Instructions for running:
+
+1) Run: npm start from root directory. 
+
+2) cd backend/
+
+3) run: nodemon server
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

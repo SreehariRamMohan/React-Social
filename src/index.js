@@ -3,13 +3,16 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware} from 'redux';
 import { Provider } from 'react-redux';
 
 import {TYPING, PUBLISH_POST, CLEAR_MESSAGE, PUBLISH_COMMENT, CLEAR_COMMENT, TYPING_COMMENT} from "./actions"
 
 import {enableAllPlugins} from "immer"
 import produce from "immer"
+
+import thunk from 'redux-thunk';
+
 
 enableAllPlugins()
 
@@ -159,7 +162,7 @@ function reducer(state = initialState, action) {
 //   }
 // }
 
-const store = createStore(reducer);
+const store = createStore(reducer, applyMiddleware(thunk));
 
 ReactDOM.render(
   <Provider store={store}>
