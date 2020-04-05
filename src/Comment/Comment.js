@@ -5,8 +5,8 @@ import './Comment.css'
 function Comment(props) {
     return (
         <div className="postedCommentContainer">
-            <img className="postedCommentPhoto" src={comment_photo}></img>
-            <textarea value={props.comment} readOnly className="postedCommentInput" ></textarea>
+            <img className="postedCommentPhoto" src={comment_photo}></img>            
+            <div readOnly className="postedCommentInput" >{props.comment}</div>
         </div>
     );
 }
