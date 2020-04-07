@@ -9,6 +9,8 @@ export const CLEAR_COMMENT = "CLEAR_COMMENT";
 export const POST_MESSAGE_SUCCESS = "POST_MESSAGE_SUCCESS";
 export const POST_MESSAGE_FAILURE = "POST_MESSAGE_FAILURE";
 export const FETCH_DATA_SUCCESS_MONGO = "FETCH_DATA_SUCCESS_MONGO"
+export const POSTED_COMMENT_TO_MONGO = "POSTED_COMMENT_TO_MONGO"
+export const LOGGING_IN_USER = "LOGGING_IN_USER"
 
 export function typed_message(message) {
     return {
@@ -68,7 +70,7 @@ export function post_message_failure(error) {
 
 export function post_comment_success(json) {
     return {
-        type: "POSTED_COMMENT_TO_MONGO",
+        type: POSTED_COMMENT_TO_MONGO,
     }
 }
 
@@ -88,6 +90,39 @@ export function fetch_data_success(data) {
 export function fetch_data_failure() {
     return {
         type: "FETCH_DATA_FAILURE_MONGO"
+    }
+}
+
+
+
+export function log_in(username) {
+    return {
+        type: "LOGGING_IN_USER",
+        username: username
+    }
+}
+
+export function failed_log_in(username) {
+    return {
+        type: "FAILED_TO_AUTHENTICATE_USER",
+        username: username
+    }
+}
+
+export function create_user_mongo(username, password) {
+    let userObject = {
+        "username": username,
+        "password": password
+    }
+
+    return (dispatch) => {
+        return axios.post("http://localhost:5000/user/add", userObject)
+            .then(json => {
+                dispatch(log_in(username));
+            })
+            .catch(error => {
+                dispatch(failed_log_in(username));
+            })
     }
 }
 

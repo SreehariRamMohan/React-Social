@@ -7,7 +7,7 @@ import * as serviceWorker from './serviceWorker';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 
-import { TYPING, PUBLISH_POST, CLEAR_MESSAGE, PUBLISH_COMMENT, FETCH_DATA_SUCCESS_MONGO } from "./actions"
+import { LOGGING_IN_USER, TYPING, PUBLISH_POST, CLEAR_MESSAGE, PUBLISH_COMMENT, FETCH_DATA_SUCCESS_MONGO } from "./actions"
 
 import { enableAllPlugins } from "immer"
 import produce from "immer"
@@ -18,9 +18,8 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link,
 } from "react-router-dom";
-
 
 enableAllPlugins()
 
@@ -40,6 +39,8 @@ const initialState = {
   messages: [],
   message: "",
   comment: "",
+  username: "",
+  loggedIn: false
 }
 
 //New reducer code is Immer.js
@@ -82,6 +83,12 @@ function reducer(state = initialState, action) {
 
       case FETCH_DATA_SUCCESS_MONGO: {
         draft.messages = action.payload;
+        return draft;
+      }
+
+      case LOGGING_IN_USER: {
+        draft.username = action.username;
+        draft.loggedIn = true;
         return draft;
       }
 

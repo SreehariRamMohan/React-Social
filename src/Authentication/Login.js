@@ -1,10 +1,23 @@
 import React from 'react';
 
 import './Login.css';
+import { connect } from 'react-redux';
+import { create_user_mongo } from "../actions"
+import { BrowserRouter as Router, Route, Redirect, withRouter } from 'react-router-dom'
 
 
 var bcrypt = require('bcryptjs');
 const saltRounds = 10;
+
+
+function mapStateToProps(state) {
+    return {
+        messages: state.messages,
+        message: state.message,
+        username: state.username,
+        loggedIn: state.loggedIn
+    };
+}
 
 class Login extends React.Component {
 
@@ -39,7 +52,13 @@ class Login extends React.Component {
     handleSubmit(event) {
         console.log("form submitted", this.state.username, this.state.password)
         event.preventDefault();
-        this.test_bcrypt();
+        //this.test_bcrypt();
+        this.props.dispatch(create_user_mongo(this.state.username, this.state.password))
+            .then(() => {
+                console.log("finished logging in the user", this.props.username, "logged in?", this.props.loggedIn)
+                this.props.history.push("/home");
+            });
+
     }
 
     test_bcrypt() {
@@ -71,7 +90,6 @@ class Login extends React.Component {
 
     render() {
         return (
-
             <div className="Login">
 
                 <div className="containerLogin">
@@ -97,4 +115,4 @@ class Login extends React.Component {
     }
 
 }
-export default Login;
+export default connect(mapStateToProps, null)(withRouter(Login));;
