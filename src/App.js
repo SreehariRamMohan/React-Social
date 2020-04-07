@@ -8,10 +8,14 @@ import { connect } from 'react-redux';
 
 import {typed_message, post_message, clear_message, post_message_mongo, fetch_data_from_mongo} from "./actions"
 
+import { BrowserRouter as Router, Route, Redirect, withRouter } from 'react-router-dom'
+
 function mapStateToProps(state) {
   return {
     messages: state.messages,
-    message: state.message
+    message: state.message,
+    username: state.username,
+    loggedIn: state.loggedIn
   };
 }
 
@@ -25,8 +29,16 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    console.log("Trying to fetch data in component did mount");
-    this.props.dispatch(fetch_data_from_mongo());
+
+
+    if(!this.props.loggedIn) {
+      console.log("oops, you're not logged in :)", this.props.loggedIn, this.props.username)
+      this.props.history.push("/");
+      return;
+    } else {
+      console.log("Trying to fetch data in component did mount");
+      this.props.dispatch(fetch_data_from_mongo());
+    }
   }
 
   handleTextChange(event) {
@@ -106,4 +118,4 @@ class App extends React.Component {
   }
 
 }
-export default connect(mapStateToProps, null)(App);
+export default withRouter(connect(mapStateToProps, null)(App));

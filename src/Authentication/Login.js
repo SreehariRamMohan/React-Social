@@ -120,4 +120,4 @@ class Login extends React.Component {
     }
 
 }
-export default connect(mapStateToProps, null)(withRouter(Login));;
+export default withRouter(connect(mapStateToProps, null)(Login));
