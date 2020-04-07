@@ -56,8 +56,13 @@ class Login extends React.Component {
         this.props.dispatch(create_user_mongo(this.state.username, this.state.password))
             .then(() => {
                 console.log("finished logging in the user", this.props.username, "logged in?", this.props.loggedIn)
-                this.props.history.push("/home");
-            });
+                if (this.props.loggedIn) {
+                    this.props.history.push("/home");
+                } else {
+                    alert("Oops, there is already a user with that username!")
+                }
+
+            })
 
     }
 
@@ -98,7 +103,7 @@ class Login extends React.Component {
                     <form onSubmit={this.handleSubmit} className="formLogin">
                         <input name="username" onChange={this.handleChange} value={this.state.username} className="username-input" placeholder="Username"></input>
 
-                        <input name="password" onChange={this.handleChange} value={this.state.password} className="password-input" placeholder="password"></input>
+                        <input name="password" type="password" onChange={this.handleChange} value={this.state.password} className="password-input" placeholder="password"></input>
 
                         <input name="login" className="login-button" type="submit" value="Login" />
                     </form>
