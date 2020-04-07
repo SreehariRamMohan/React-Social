@@ -1,0 +1,43 @@
+.containerLogin {
+    background-color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    color: #000000;
+    font-size: 5em;
+
+    padding-left: 3em;
+    padding-right: 3em;
+  
+    margin-top: 2em;
+    
+  }
+
+
+  .formLogin {
+      display: flex;
+      flex-direction: column;
+  }
+
+  .loginText {
+      font-size: 1em;
+  }
+
+  .username-input {
+      width: 30vw;
+      height: 4vh;
+      margin-bottom: 2vh;
+  }
+
+  .password-input {
+      width: 30vw;
+      height: 4vh;
+      margin-bottom: 2vh;
+  }
+
+  .login-button {
+      width: 10vw;
+      height: 2vh;
+  }

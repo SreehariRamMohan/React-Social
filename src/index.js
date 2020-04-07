@@ -2,16 +2,24 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import ReactRouter from "./ReactRouter"
 import * as serviceWorker from './serviceWorker';
-import { createStore, applyMiddleware} from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 
-import {TYPING, PUBLISH_POST, CLEAR_MESSAGE, PUBLISH_COMMENT, FETCH_DATA_SUCCESS_MONGO} from "./actions"
+import { TYPING, PUBLISH_POST, CLEAR_MESSAGE, PUBLISH_COMMENT, FETCH_DATA_SUCCESS_MONGO } from "./actions"
 
-import {enableAllPlugins} from "immer"
+import { enableAllPlugins } from "immer"
 import produce from "immer"
 
 import thunk from 'redux-thunk';
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
 
 enableAllPlugins()
@@ -37,11 +45,11 @@ const initialState = {
 //New reducer code is Immer.js
 
 function reducer(state = initialState, action) {
-  
+
   console.log("==> reducer called", state, action)
 
   const producer = produce((draft, action) => {
-    
+
     switch (action.type) {
 
       case PUBLISH_POST: {
@@ -55,8 +63,8 @@ function reducer(state = initialState, action) {
       }
 
       case PUBLISH_COMMENT: {
-        for(var i = 0; i < draft.messages.length; i++) {
-          if(draft.messages[i].key === action.key) {
+        for (var i = 0; i < draft.messages.length; i++) {
+          if (draft.messages[i].key === action.key) {
             draft.messages[i].comments.push(action.comment)
           }
         }
@@ -83,11 +91,11 @@ function reducer(state = initialState, action) {
     }
   }, state);
 
-  
+
   const nextState = producer(state, action);
   console.log("<== reducer finished ", nextState, action.type);
   return nextState;
- 
+
 
 }
 
@@ -123,9 +131,9 @@ function reducer(state = initialState, action) {
 //                 comments: [...state.messages[index].comments, action.comment]
 //               }
 //             }
-            
+
 //             return item;
-            
+
 //           })
 //         }
 //     case TYPING:
@@ -160,11 +168,13 @@ function reducer(state = initialState, action) {
 const store = createStore(reducer, applyMiddleware(thunk));
 
 ReactDOM.render(
-  <Provider store={store}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </Provider>,
+  <Router>
+    <Provider store={store}>
+      <React.StrictMode>
+        <ReactRouter />
+      </React.StrictMode>
+    </Provider>
+  </Router>,
   document.getElementById('root')
 );
 
