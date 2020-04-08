@@ -39,8 +39,15 @@ router.route('/add').post((req, res) => {
 
 router.route("/add/comment/:postKey").post((req, res) => {
   const comment = req.body.comment;
+  const author = req.body.author;
   const postKey = req.params.postKey;
-  Post.update({"key": postKey},  { $push: { comments: comment }})
+
+  const objectToPush = {
+    "comment": comment,
+    "author": author
+  }
+  
+  Post.update({"key": postKey},  { $push: { comments: objectToPush }})
   .then(() => res.json("Adding post"))
   .catch((err) => res.status(500).json("Error" + err))
 });

@@ -49,11 +49,12 @@ export function clear_comment(key) {
     }
 }
 
-export function post_comment(comment, key) {
+export function post_comment(comment, key, username) {
     return {
         type: PUBLISH_COMMENT,
         comment: comment,
-        key: key
+        key: key,
+        author: username
     }
 }
 
@@ -167,14 +168,15 @@ export function post_message_mongo(message, currentDate, postKey, posterName) {
     }
 }
 
-export function post_comment_mongo(comment, postKey) {
+export function post_comment_mongo(comment, postKey, username) {
 
     let reqEndpoint = "http://localhost:1080/post/add/comment/" + postKey
 
     console.log("**", reqEndpoint);
 
     let payload = {
-        comment: comment
+        "comment": comment,
+        "author": username
     }
 
     return (dispatch) => {

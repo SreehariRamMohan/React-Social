@@ -67,7 +67,10 @@ function reducer(state = initialState, action) {
       case PUBLISH_COMMENT: {
         for (var i = 0; i < draft.messages.length; i++) {
           if (draft.messages[i].key === action.key) {
-            draft.messages[i].comments.push(action.comment)
+            draft.messages[i].comments.push({
+              "comment": action.comment,
+              "author": action.author
+            })
           }
         }
       }

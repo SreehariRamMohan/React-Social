@@ -6,7 +6,10 @@ const postSchema = new Schema({
   message: String,
   author: String,
   date: String,
-  comments: [String],
+  comments: [{
+    comment: String,
+    author: String
+  }],
   key: Number,
 });
 

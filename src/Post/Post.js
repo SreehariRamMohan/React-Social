@@ -15,7 +15,8 @@ function mapStateToProps(state) {
     return {
         messages: state.messages,
         message: state.message,
-        comment: state.comment
+        comment: state.comment,
+        username: state.username
     };
 }
 
@@ -39,9 +40,9 @@ class Post extends React.Component {
             console.log("enter pressed on comment" + event.target.value + " " + this.props.key_index);
 
             //push the comment to redux
-            this.props.dispatch(post_comment(this.state.commentTypedSoFar, this.props.key_index))
+            this.props.dispatch(post_comment(this.state.commentTypedSoFar, this.props.key_index, this.props.username))
             
-            this.props.dispatch(post_comment_mongo(this.state.commentTypedSoFar, this.props.key_index))
+            this.props.dispatch(post_comment_mongo(this.state.commentTypedSoFar, this.props.key_index, this.props.username))
 
             this.setState({
                 commentTypedSoFar: ""
@@ -62,7 +63,7 @@ class Post extends React.Component {
         for(var i = 0; i < messages.length; i++) {
             if(messages[i].key === indexToFind) {
                 return messages[i].comments.map((comment, index) => 
-                <Comment key={index} comment={comment}/>)
+                <Comment key={index} comment={comment.comment} author={comment.author}/>)
             }
         }
     }
