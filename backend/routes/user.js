@@ -4,7 +4,7 @@ let User = require('../models/user.model');
 
 router.route('/').get((req, res) => {
     console.log("here in the user axios endpoint call")
-    res.json({"response": "hello from user endpoint"});
+    res.json({ "response": "hello from user endpoint" });
 
 });
 
@@ -13,13 +13,47 @@ router.route('/add').post((req, res) => {
     const password = req.body.password;
 
     const newUser = new User({
-       username: username,
-       password: password
+        username: username,
+        password: password
     });
 
     newUser.save()
-    .then(() => res.json({"status": "User added!"}))
-    .catch(err => res.status(400).json("Error: " + err));
+        .then(() => res.json({ "status": "User added!" }))
+        .catch(err => res.status(400).json("Error: " + err));
 });
+
+router.route('/login').post((req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+
+    console.log("here in axios login endpoint")
+
+    // fetch user and test password verification
+    User.findOne({ username: username }, function (err, user) {
+        //if (err) throw err;
+
+        console.log("Does a user exist??", user);
+
+        if (!user) {
+            res.json(
+                {
+                    "success": false,
+                });
+        } else {
+            // test a matching password
+            user.comparePassword(password, function (err, isMatch) {
+                //if (err) throw err;
+                console.log('is password a match?', isMatch); // -> Password123: true
+                res.json({ "success": isMatch })
+            })
+        }
+
+
+    }).catch(error => {
+        console.log("** error finding the user");
+        res.json({ "success": false });
+    })
+});
+
 
 module.exports = router;

@@ -1,4 +1,4 @@
-.containerLogin {
+.containerSignup {
     background-color: #ffffff;
     min-height: 100vh;
     display: flex;
@@ -10,16 +10,16 @@
 
     padding-left: 3em;
     padding-right: 3em;
-      
+    
   }
 
 
-  .formLogin {
+  .formSignup {
       display: flex;
       flex-direction: column;
   }
 
-  .loginText {
+  .signupText {
       font-size: 8em;
   }
 
@@ -35,14 +35,15 @@
       margin-bottom: 2vh;
   }
 
-  .login-button {
+  .signup-button {
       width: 10vw;
       height: 2vh;
   }
 
-  .containerLogin p {
-      font-size: 5em;
-  }
-  .redirectToSignup {
-      color: #1d4a9e;
-  }
+  .containerSignup p {
+    font-size: 5em;
+}
+.redirectToLogin {
+    color: #1d4a9e;
+}
+

@@ -2,7 +2,7 @@ import React from 'react';
 
 import './Login.css';
 import { connect } from 'react-redux';
-import { create_user_mongo } from "../actions"
+import { create_user_mongo, login_user_mongo } from "../actions"
 import { BrowserRouter as Router, Route, Redirect, withRouter } from 'react-router-dom'
 
 
@@ -32,7 +32,7 @@ class Login extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.test_bcrypt = this.test_bcrypt.bind(this);
-
+        this.redirectToSignup = this.redirectToSignup.bind(this);
     }
 
     handleChange(event) {
@@ -53,13 +53,13 @@ class Login extends React.Component {
         console.log("form submitted", this.state.username, this.state.password)
         event.preventDefault();
         //this.test_bcrypt();
-        this.props.dispatch(create_user_mongo(this.state.username, this.state.password))
+        this.props.dispatch(login_user_mongo(this.state.username, this.state.password))
             .then(() => {
                 console.log("finished logging in the user", this.props.username, "logged in?", this.props.loggedIn)
                 if (this.props.loggedIn) {
                     this.props.history.push("/home");
                 } else {
-                    alert("Oops, there is already a user with that username!")
+                    alert("Oops, wrong username or password")
                 }
 
             })
@@ -93,6 +93,10 @@ class Login extends React.Component {
 
     }
 
+    redirectToSignup() {
+        this.props.history.push("/signup");
+    }
+
     render() {
         return (
             <div className="Login">
@@ -107,6 +111,9 @@ class Login extends React.Component {
 
                         <input name="login" className="login-button" type="submit" value="Login" />
                     </form>
+
+                    <p>Don't have an account? Signup <span onClick={this.redirectToSignup} className="redirectToSignup">here</span></p>
+
 
 
                 </div>

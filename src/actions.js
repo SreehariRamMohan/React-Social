@@ -116,12 +116,33 @@ export function create_user_mongo(username, password) {
     }
 
     return (dispatch) => {
-        return axios.post("http://localhost:5000/user/add", userObject)
+        return axios.post("http://localhost:1080/user/add", userObject)
             .then(json => {
                 dispatch(log_in(username));
             })
             .catch(error => {
                 dispatch(failed_log_in(username));
+            })
+    }
+}
+
+export function login_user_mongo(username, password) {
+    let userObject = {
+        "username": username,
+        "password": password
+    }
+    console.log("trying to log user in", username, password)
+    return (dispatch) => {
+        return axios.post("http://localhost:1080/user/login", userObject)
+            .then(json => {
+                console.log("response json", json.data);
+
+                if (json.data.success) {
+                    dispatch(log_in(username));
+                } else {
+                    dispatch(failed_log_in(username));
+                }
+
             })
     }
 }
@@ -135,7 +156,7 @@ export function post_message_mongo(message, currentDate, postKey) {
         "key": postKey,
     }
     return (dispatch) => {
-        return axios.post("http://localhost:5000/post/add", messageToSend)
+        return axios.post("http://localhost:1080/post/add", messageToSend)
             .then(json => {
                 dispatch(post_message_success(json))
             })
@@ -147,7 +168,7 @@ export function post_message_mongo(message, currentDate, postKey) {
 
 export function post_comment_mongo(comment, postKey) {
 
-    let reqEndpoint = "http://localhost:5000/post/add/comment/" + postKey
+    let reqEndpoint = "http://localhost:1080/post/add/comment/" + postKey
 
     console.log("**", reqEndpoint);
 
@@ -170,21 +191,21 @@ export function post_comment_mongo(comment, postKey) {
 export function fetch_data_from_mongo() {
     console.log("**", "trying to fetch data from mongo");
     return (dispatch) => {
-        return axios.get('http://localhost:5000/post/')
-        .then(function (response) {
-            // handle success
-            console.log(response);
-            dispatch(fetch_data_success(response.data))
-        })
-        .catch(function (error) {
-            // handle error
-            console.log(error);
-            dispatch(fetch_data_failure());
-        })
-        .then(function () {
-            // always executed
-        });
+        return axios.get('http://localhost:1080/post/')
+            .then(function (response) {
+                // handle success
+                console.log(response);
+                dispatch(fetch_data_success(response.data))
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+                dispatch(fetch_data_failure());
+            })
+            .then(function () {
+                // always executed
+            });
     }
-    
+
 
 }
