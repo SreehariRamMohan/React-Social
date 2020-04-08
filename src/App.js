@@ -74,9 +74,9 @@ class App extends React.Component {
     var post_date = this.getPostingDate(date)
     console.log("Posting date to display is " + post_date);
 
-    this.props.dispatch(post_message(post_key, post_date));
+    this.props.dispatch(post_message(post_key, post_date, this.props.username));
     this.props.dispatch(clear_message());
-    this.props.dispatch(post_message_mongo(this.props.message, post_date, post_key));
+    this.props.dispatch(post_message_mongo(this.props.message, post_date, post_key, this.props.username));
   }
 
   render() {
@@ -109,7 +109,7 @@ class App extends React.Component {
           </div>
 
           {
-            this.props.messages.map((message, index) => <Post messageContent={message.message} date={message.date} key={message.key} key_index={message.key}/>)
+            this.props.messages.map((message, index) => <Post messageContent={message.message} date={message.date} key={message.key} author={message.author} key_index={message.key}/>)
           }
 
         </header>

@@ -27,11 +27,12 @@ export function typed_comment(comment, key) {
     }
 }
 
-export function post_message(post_key, post_date) {
+export function post_message(post_key, post_date, posterName) {
     return {
         type: PUBLISH_POST,
         key: post_key,
-        date: post_date
+        date: post_date,
+        posterName: posterName
     }
 }
 
@@ -147,10 +148,10 @@ export function login_user_mongo(username, password) {
     }
 }
 
-export function post_message_mongo(message, currentDate, postKey) {
+export function post_message_mongo(message, currentDate, postKey, posterName) {
     let messageToSend = {
         "message": message,
-        "author": "Bob Rammohan",
+        "author": posterName,
         "date": currentDate,
         "comments": [],
         "key": postKey,

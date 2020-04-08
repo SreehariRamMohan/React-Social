@@ -23,7 +23,7 @@ class Post extends React.Component {
     constructor(props) {
         super(props)
         this.handleKeyPress = this.handleKeyPress.bind(this);
-        this.commentOnChange = this.commentOnChange.bind(this);
+        this.commentOnChange = this.commentOnChange.bind(this);        
 
         //This is state ONLY needed for this component. Should not be pushing to Redux because it is inefficient 
         //(no other component needs to know what the user is typing - only what they ultimately typed)
@@ -76,15 +76,11 @@ class Post extends React.Component {
                     <img src={profile} className="profilePost"></img>
 
                     <div className="innerPostContainer">
-                        <p className="posterName">Sreehari Rammohan</p>
+                        <p className="posterName">{this.props.author}</p>
                         <p className="posterDate">{this.props.date}</p>
                     </div>
 
-
-
-
                 </div>
-
 
                 <textarea
                     className="postedInput"

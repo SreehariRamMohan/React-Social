@@ -59,6 +59,7 @@ function reducer(state = initialState, action) {
           message: draft.message,
           date: action.date,
           comments: [],
+          author: action.posterName
         })
         return draft;
       }
