@@ -18,11 +18,12 @@
 
 #### Libraries 
 * Redux, React-Redux, Redux-Thunk => for local & async state management
+* Immer => for immutable state updates to redux store
 * Axios, Express => for server side API calls
 * React-Router => for navigation
 * Mongoose, MongoDB => for database integration
 * bcrypt js => to securely hash & salt passwords
 
-##### License
+#### License
 * Special thanks to Icons 8 for the profile picture icons. You can find the icons I used [here](https://icons8.com/icon/pack/profile/color)
 

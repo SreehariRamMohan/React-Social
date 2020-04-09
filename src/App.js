@@ -42,6 +42,7 @@ class App extends React.Component {
       console.log("Trying to fetch data in component did mount");
       this.props.dispatch(fetch_data_from_mongo());
     }
+    
   }
 
   handleTextChange(event) {

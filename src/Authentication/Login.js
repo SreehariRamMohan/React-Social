@@ -57,7 +57,7 @@ class Login extends React.Component {
             .then(() => {
                 console.log("finished logging in the user", this.props.username, "logged in?", this.props.loggedIn)
                 if (this.props.loggedIn) {
-                    this.props.history.push("/home");
+                    this.props.history.push("/profile");
                 } else {
                     alert("Oops, wrong username or password")
                 }

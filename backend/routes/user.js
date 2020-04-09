@@ -22,6 +22,34 @@ router.route('/add').post((req, res) => {
         .catch(err => res.status(400).json("Error: " + err));
 });
 
+router.route("/update/profile").post((req, res) => {
+    const username = req.body.username;
+    const pictureName = req.body.pictureName;
+
+    console.log("here in axios update picture endpoint");
+
+    var userExists = false;
+
+    User.findOne({username: username}, function(err, user) {
+       if(user) {
+            user.pictureName = pictureName;
+            user.save();
+            userExists = true;
+       }
+    })
+    .then( () => {
+        if(userExists) {
+            res.json({"status": "profile image updated"})
+        } else {
+            res.json({"status": "profile image failed to update"})
+        }
+    })
+    .catch(err => {
+        console.log("Error in update profile endpoint", err);
+        res.status(400).json("Error: " + err)
+    });
+})
+
 router.route('/login').post((req, res) => {
     const username = req.body.username;
     const password = req.body.password;

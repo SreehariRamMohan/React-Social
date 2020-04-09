@@ -8,6 +8,8 @@ import './Profile.css';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Redirect, withRouter } from 'react-router-dom'
 
+import {update_profile_picture_mongo, update_profile_picture} from "../actions"
+
 var classNames = require('classnames');
 
 function mapStateToProps(state) {
@@ -27,7 +29,6 @@ class Profile extends React.Component {
         this.state = {
             canSelectProfile: true,
             selectedProfile: ""
-
         }
 
         this.onClickProfilePicture = this.onClickProfilePicture.bind(this);
@@ -36,12 +37,20 @@ class Profile extends React.Component {
 
     }
 
+    componentDidMount() {
+        if(!this.props.loggedIn) {
+            console.log("oops, you're not logged in :)", this.props.loggedIn, this.props.username)
+            //this.props.history.push("/");
+            return;
+        }
+    }
+
     profilePhotosArray() {
         var photos = []
         for (var i = 1; i <= 14; i++) {
             photos.push("profile" + i + ".png");
         }
-        console.log(photos)
+        //console.log(photos)
         return photos;
 
     }
@@ -51,7 +60,6 @@ class Profile extends React.Component {
 
         //const wrapperClassName = "profileWrapper" + " " + name + " hover";
 
-        console.log("**", name)
         return (
             <div key={index}
             onClick={() => this.onClickProfilePicture(name)}
@@ -76,8 +84,8 @@ class Profile extends React.Component {
 
     confirmSelection(event) {
         console.log("confirm selection clicked");
-
-
+        this.props.dispatch(update_profile_picture(this.state.selectedProfile));
+        this.props.dispatch(update_profile_picture_mongo(this.state.selectedProfile, this.props.username))
     }
 
     resetSelection(event) {

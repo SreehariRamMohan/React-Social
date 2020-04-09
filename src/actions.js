@@ -11,6 +11,10 @@ export const POST_MESSAGE_FAILURE = "POST_MESSAGE_FAILURE";
 export const FETCH_DATA_SUCCESS_MONGO = "FETCH_DATA_SUCCESS_MONGO"
 export const POSTED_COMMENT_TO_MONGO = "POSTED_COMMENT_TO_MONGO"
 export const LOGGING_IN_USER = "LOGGING_IN_USER"
+export const FAILED_TO_POST_COMMENT_TO_MONGO = "FAILED_TO_POST_COMMENT_TO_MONGO"
+export const FETCH_DATA_FAILURE_MONGO = "FETCH_DATA_FAILURE_MONGO"
+export const FAILED_TO_AUTHENTICATE_USER = "FAILED_TO_AUTHENTICATE_USER"
+export const UPDATE_PROFILE_PICTURE_CHOICE = "UPDATE_PROFILE_PICTURE_CHOICE"
 
 export function typed_message(message) {
     return {
@@ -78,7 +82,7 @@ export function post_comment_success(json) {
 
 export function post_comment_failure(error) {
     return {
-        type: "FAILED_TO_POST_COMMENT_TO_MONGO",
+        type: FAILED_TO_POST_COMMENT_TO_MONGO,
     }
 }
 
@@ -91,23 +95,56 @@ export function fetch_data_success(data) {
 
 export function fetch_data_failure() {
     return {
-        type: "FETCH_DATA_FAILURE_MONGO"
+        type: FETCH_DATA_FAILURE_MONGO
     }
 }
 
 
-
 export function log_in(username) {
     return {
-        type: "LOGGING_IN_USER",
+        type: LOGGING_IN_USER,
         username: username
     }
 }
 
 export function failed_log_in(username) {
     return {
-        type: "FAILED_TO_AUTHENTICATE_USER",
+        type: FAILED_TO_AUTHENTICATE_USER,
         username: username
+    }
+}
+
+export function update_profile_picture(pictureName) {
+    return {
+        type: UPDATE_PROFILE_PICTURE_CHOICE,
+        pictureName: pictureName
+    }
+}
+
+export function changed_profile_picture(json) {
+    return {
+        type: "CHANGED_PROFILE_PICTURE",
+    }
+}
+
+export function failed_to_change_profile_picture(err) {
+    return {
+        type: "FAILED_TO_CHANGE_PROFILE_PICTURE",
+        err: err
+    }
+}
+
+export function update_profile_picture_mongo(pictureName, username) {
+    let payload = {
+        "username": username,
+        "pictureName": pictureName
+    }
+
+    return (dispatch) => {
+        return axios.post("http://localhost:1080/user/update/profile/", payload)
+            .then(json => {
+                dispatch(changed_profile_picture(json))
+            })
     }
 }
 
@@ -123,6 +160,7 @@ export function create_user_mongo(username, password) {
                 dispatch(log_in(username));
             })
             .catch(error => {
+                console.log(error);
                 dispatch(failed_log_in(username));
             })
     }
@@ -145,7 +183,8 @@ export function login_user_mongo(username, password) {
                     dispatch(failed_log_in(username));
                 }
 
-            })
+            }
+        )
     }
 }
 

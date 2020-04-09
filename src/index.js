@@ -7,7 +7,7 @@ import * as serviceWorker from './serviceWorker';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 
-import { LOGGING_IN_USER, TYPING, PUBLISH_POST, CLEAR_MESSAGE, PUBLISH_COMMENT, FETCH_DATA_SUCCESS_MONGO } from "./actions"
+import { UPDATE_PROFILE_PICTURE_CHOICE, LOGGING_IN_USER, TYPING, PUBLISH_POST, CLEAR_MESSAGE, PUBLISH_COMMENT, FETCH_DATA_SUCCESS_MONGO} from "./actions"
 
 import { enableAllPlugins } from "immer"
 import produce from "immer"
@@ -40,7 +40,8 @@ const initialState = {
   message: "",
   comment: "",
   username: "",
-  loggedIn: false
+  loggedIn: false,
+  pictureName: ""
 }
 
 //New reducer code is Immer.js
@@ -93,6 +94,11 @@ function reducer(state = initialState, action) {
       case LOGGING_IN_USER: {
         draft.username = action.username;
         draft.loggedIn = true;
+        return draft;
+      }
+
+      case UPDATE_PROFILE_PICTURE_CHOICE: {
+        draft.pictureName = action.pictureName;
         return draft;
       }
 
