@@ -92,7 +92,7 @@ class App extends React.Component {
             <p>Create post</p>
 
             <div className="postContainer">
-              <img src={test_profile} className="profilePost"></img>
+              <img src={test_profile} className="profilePostApp"></img>
               <textarea onChange={this.handleTextChange}
                 className="postInput"
                 value={this.props.message}

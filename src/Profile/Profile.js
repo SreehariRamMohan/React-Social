@@ -1,15 +1,21 @@
 import React from 'react';
 
+import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
+import { Button } from 'antd';
+
+
 import './Profile.css';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Redirect, withRouter } from 'react-router-dom'
+
+var classNames = require('classnames');
 
 function mapStateToProps(state) {
     return {
         messages: state.messages,
         message: state.message,
         username: state.username,
-        loggedIn: state.loggedIn
+        loggedIn: state.loggedIn,
     };
 }
 
@@ -18,8 +24,16 @@ class Profile extends React.Component {
     constructor(props) {
         super(props);
 
-     
-        
+        this.state = {
+            canSelectProfile: true,
+            selectedProfile: ""
+
+        }
+
+        this.onClickProfilePicture = this.onClickProfilePicture.bind(this);
+        this.confirmSelection = this.confirmSelection.bind(this);
+        this.resetSelection = this.resetSelection.bind(this);
+
     }
 
     profilePhotosArray() {
@@ -29,16 +43,64 @@ class Profile extends React.Component {
         }
         console.log(photos)
         return photos;
-       
+
     }
 
-    returnImageComponent(name) {
-        console.log("trying to create the image", name);
+    returnImageComponent(name, index) {
         const picture = require('../res/userIcons/' + name);
 
+        //const wrapperClassName = "profileWrapper" + " " + name + " hover";
+
+        console.log("**", name)
         return (
-            <div className="profileWrapper"><img src={picture} /></div>
+            <div key={index}
+            onClick={() => this.onClickProfilePicture(name)}
+                className=
+                {
+                classNames(
+
+                "profileWrapper", name, 
+                
+                {"hover": this.state.canSelectProfile},
+                
+                {"selectedNewProfile": this.state.selectedProfile === name}
+                
+                )
+                }
+                ><img 
+                src={picture} 
+                /></div>
         );
+
+    }
+
+    confirmSelection(event) {
+        console.log("confirm selection clicked");
+
+
+    }
+
+    resetSelection(event) {
+        console.log("reset selection clicked");
+
+        this.setState({
+            canSelectProfile: true,
+            selectedProfile: ""
+        })
+    }
+
+    onClickProfilePicture(pictureName) {
+
+        if(!this.state.canSelectProfile) {
+            return;
+        }
+        
+        console.log("Clicked " + pictureName);
+
+        this.setState({
+            canSelectProfile: false,
+            selectedProfile: pictureName
+        });
 
     }
 
@@ -48,16 +110,21 @@ class Profile extends React.Component {
                 <div className="containerProfile">
                     <p className="profilePageText">Profile Page</p>
 
-                    <hr></hr>
+                    <hr className="profileDivide"></hr>
 
-                    <p>Choose a user icon</p>
+                    <p>Change your user icon</p>
 
                     <div className="profileGrid">
 
                         {
-                            this.profilePhotosArray().map((name) => this.returnImageComponent(name))
+                            this.profilePhotosArray().map((name, index) => this.returnImageComponent(name, index))
                         }
 
+                    </div>
+
+                    <div className="buttonBoxProfile">
+                        <Button onClick={this.resetSelection} shape="round">reset selection</Button>
+                        <Button onClick={this.confirmSelection} shape="round">confirm selection</Button>
                     </div>
 
                 </div>

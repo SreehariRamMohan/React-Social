@@ -1,7 +1,7 @@
 .postedCommentPhoto {
-    width: 300px;
-    border-radius: 150px;
-    margin-right: 0.5em;
+    width: 4rem;
+    border-radius: 2rem;
+    margin-right: 0.5rem;
   }
 
   .postedCommentContainer {
@@ -10,17 +10,17 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    margin-bottom: 1.2em;
+    margin-bottom: 1.2rem;
   }
 
   .postedCommentInput {
     width: 100%;
-    height: 2em;
+    height: 4rem;
     background-color: #f8f8f8;
-    font-size: 2em;
-    border-radius: 1em;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
+    font-size: 2rem;
+    border-radius: 1rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
 
     display: flex;
     flex-direction: row;

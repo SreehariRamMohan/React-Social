@@ -7,20 +7,13 @@
     justify-content: flex-start;
     align-items: center;
     color: #000000;
-
     padding-left: 3em;
     padding-right: 3em;
-      
   }
-
 
   .formLogin {
       display: flex;
       flex-direction: column;
-  }
-
-  .loginText {
-      font-size: 8em;
   }
 
   .username-input {
@@ -41,8 +34,13 @@
   }
 
   .containerLogin p {
-      font-size: 5em;
+      font-size: 1em;
   }
+
+  .loginText {
+    font-size: 2rem !important;
+  }
+
   .redirectToSignup {
       color: #1d4a9e;
   }
