@@ -9,6 +9,7 @@ import {
 import App from "./App"
 import Login from "./Authentication/Login"
 import Signup from "./Authentication/Signup"
+import Profile from "./Profile/Profile"
 
 class ReactRouter extends React.Component {
   constructor(props) {
@@ -19,21 +20,18 @@ class ReactRouter extends React.Component {
     return (
       <div>
         <Switch>
-         
+
           <Route path="/home">
             <App />
           </Route>
-  
-          {/* If none of the previous routes render anything,
-              this route acts as a fallback.
-  
-              Important: A route with path="/" will *always* match
-              the URL because all URLs begin with a /. So that's
-              why we put this one last of all */}
 
-            <Route path="/signup">
-              <Signup />
-            </Route>
+          <Route path="/profile">
+            <Profile />
+          </Route>
+
+          <Route path="/signup">
+            <Signup />
+          </Route>
 
           <Route path="/">
             <Login />

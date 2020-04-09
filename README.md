@@ -23,3 +23,6 @@
 * Mongoose, MongoDB => for database integration
 * bcrypt js => to securely hash & salt passwords
 
+##### License
+* Special thanks to Icons 8 for the profile picture icons. You can find the icons I used [here](https://icons8.com/icon/pack/profile/color)
+

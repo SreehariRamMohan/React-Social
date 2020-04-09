@@ -1,5 +1,8 @@
 import React from 'react';
 import profile from './res/profile.JPG'
+
+import test_profile from "./res/userIcons/profile1.png"
+
 import './App.css';
 
 import Post from "./Post/Post"
@@ -89,7 +92,7 @@ class App extends React.Component {
             <p>Create post</p>
 
             <div className="postContainer">
-              <img src={profile} className="profilePost"></img>
+              <img src={test_profile} className="profilePost"></img>
               <textarea onChange={this.handleTextChange}
                 className="postInput"
                 value={this.props.message}
