@@ -1,9 +1,7 @@
 import React from 'react';
 import {
-  BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 
 import App from "./App"
@@ -12,10 +10,7 @@ import Signup from "./Authentication/Signup"
 import Profile from "./Profile/Profile"
 
 class ReactRouter extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
+  
   render() {
     return (
       <div>

@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 
 import { typed_message, post_message, clear_message, post_message_mongo, fetch_data_from_mongo } from "./actions"
 
-import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from 'react-router-dom'
+import {withRouter } from 'react-router-dom'
 
 import CustomNavbar from "./Navbar/CustomNavbar";
 
@@ -97,7 +97,7 @@ class App extends React.Component {
             <p>Create post</p>
 
             <div className="postContainer">
-              <img src={test_profile} className="profilePostApp"></img>
+              <img src={test_profile} className="profilePostApp" alt="profile"></img>
               <textarea onChange={this.handleTextChange}
                 className="postInput"
                 value={this.props.message}

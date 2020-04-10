@@ -1,4 +1,4 @@
-import React, { Text } from 'react';
+import React from 'react';
 import './Comment.css'
 
 function Comment(props) {
