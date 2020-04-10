@@ -8,8 +8,8 @@
     align-items: center;
     color: #000000;
 
-    padding-left: 3em;
-    padding-right: 3em;
+    padding-left: 3rem;
+    padding-right: 3rem;
     
   }
 
@@ -20,7 +20,7 @@
   }
 
   .signupText {
-      font-size: 8em;
+      font-size: 1rem;
   }
 
   .username-input {
@@ -40,9 +40,14 @@
       height: 2vh;
   }
 
-  .containerSignup p {
-    font-size: 5em;
+.containerSignup p {
+    font-size: 1rem;
 }
+
+.signupRedirect {
+    margin-top: 2rem;
+}
+
 .redirectToLogin {
     color: #1d4a9e;
 }

@@ -10,6 +10,8 @@ import { BrowserRouter as Router, Route, Redirect, withRouter } from 'react-rout
 
 import {update_profile_picture_mongo, update_profile_picture} from "../actions"
 
+import CustomNavbar from "../Navbar/CustomNavbar";
+
 var classNames = require('classnames');
 
 function mapStateToProps(state) {
@@ -115,6 +117,9 @@ class Profile extends React.Component {
     render() {
         return (
             <div className="Profile">
+
+                <CustomNavbar />
+
                 <div className="containerProfile">
                     <p className="profilePageText">Profile Page</p>
 

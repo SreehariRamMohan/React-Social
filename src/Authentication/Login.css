@@ -41,6 +41,10 @@
     font-size: 2rem !important;
   }
 
+  .loginRedirect {
+      margin-top: 2rem;
+  }
+
   .redirectToSignup {
       color: #1d4a9e;
   }

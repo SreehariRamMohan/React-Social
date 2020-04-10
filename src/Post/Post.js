@@ -1,8 +1,5 @@
 import React from 'react';
-import profile from '../res/profile.JPG'
 import './Post.css'
-
-import comment_photo from "../res/profile-comment.jpg";
 
 import Comment from "../Comment/Comment"
 
@@ -16,7 +13,9 @@ function mapStateToProps(state) {
         messages: state.messages,
         message: state.message,
         comment: state.comment,
-        username: state.username
+        username: state.username,
+        pictureName: state.pictureName,
+
     };
 }
 
@@ -32,6 +31,7 @@ class Post extends React.Component {
             commentTypedSoFar: ""
         }
     }
+
 
     handleKeyPress(event) {
         var keyCode = event.charCode;
@@ -68,13 +68,22 @@ class Post extends React.Component {
         }
     }
 
+    getPath(imageName) {
+        if(!imageName) {
+            imageName = "profile7.png"
+        }
+        console.log("../res/userIcons/" + "profile7.png");
+        return  "../res/userIcons/" + "profile7.png"; // image name includes .png at thee end
+    }
+
+
     render() {
         return (
             <div className="card-post">
 
                 <div className="outerPostContainer">
 
-                    <img src={profile} className="profilePost"></img>
+                    <img src={require("../res/userIcons/profile7.png")} className="profilePost"></img>
 
                     <div className="innerPostContainer">
                         <p className="posterName">{this.props.author}</p>
@@ -94,7 +103,7 @@ class Post extends React.Component {
                 {this.generateComments(this.props.messages, this.props.key_index)}
 
                 <div className="commentContainer">
-                    <img className="commentPhoto" src={comment_photo}></img>
+                    <img className="commentPhoto" src={require("../res/userIcons/profile13.png")}></img>
                     <textarea onKeyPress={this.handleKeyPress} onChange={this.commentOnChange}
                         placeholder={"write a comment..."}
                         className="commentInput"

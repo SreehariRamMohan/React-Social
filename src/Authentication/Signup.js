@@ -1,5 +1,8 @@
 import React from 'react';
 
+import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
+import { Button } from 'antd';
+
 import './Signup.css';
 import { connect } from 'react-redux';
 import { create_user_mongo } from "../actions"
@@ -76,15 +79,15 @@ class Signup extends React.Component {
                 <div className="containerSignup">
                     <p className="signupText">Signup</p>
 
-                    <form onSubmit={this.handleSubmit} className="formSignup">
+                    <form className="formSignup">
                         <input name="username" onChange={this.handleChange} value={this.state.username} className="username-input" placeholder="Username"></input>
 
                         <input name="password" type="password" onChange={this.handleChange} value={this.state.password} className="password-input" placeholder="password"></input>
 
-                        <input name="signup" className="signup-button" type="submit" value="Signup" />
+                        <Button onClick={this.handleSubmit}>Signup</Button>
                     </form>
 
-                    <p>Already have an account? Login <span onClick={this.redirectToLogin} className="redirectToLogin">here</span></p>
+                    <p className="signupRedirect">Already have an account? Login <span onClick={this.redirectToLogin} className="redirectToLogin">here</span></p>
 
 
                 </div>

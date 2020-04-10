@@ -14,7 +14,8 @@
 
   .profilePageText {
     font-size: 2rem;
-    padding: 0rem;
+    padding-top: 1rem;
+    margin: 0;
   }
 
   .profileDivide {

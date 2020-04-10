@@ -1,5 +1,4 @@
 import React from 'react';
-import profile from './res/profile.JPG'
 
 import test_profile from "./res/userIcons/profile1.png"
 
@@ -9,9 +8,11 @@ import Post from "./Post/Post"
 
 import { connect } from 'react-redux';
 
-import {typed_message, post_message, clear_message, post_message_mongo, fetch_data_from_mongo} from "./actions"
+import { typed_message, post_message, clear_message, post_message_mongo, fetch_data_from_mongo } from "./actions"
 
-import { BrowserRouter as Router, Route, Redirect, withRouter } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from 'react-router-dom'
+
+import CustomNavbar from "./Navbar/CustomNavbar";
 
 function mapStateToProps(state) {
   return {
@@ -34,7 +35,7 @@ class App extends React.Component {
   componentDidMount() {
 
 
-    if(!this.props.loggedIn) {
+    if (!this.props.loggedIn) {
       console.log("oops, you're not logged in :)", this.props.loggedIn, this.props.username)
       this.props.history.push("/");
       return;
@@ -42,7 +43,7 @@ class App extends React.Component {
       console.log("Trying to fetch data in component did mount");
       this.props.dispatch(fetch_data_from_mongo());
     }
-    
+
   }
 
   handleTextChange(event) {
@@ -55,8 +56,8 @@ class App extends React.Component {
     var minutes = date.getMinutes();
     var ampm = hours >= 12 ? 'PM' : 'AM';
     hours = hours % 12;
-    hours = hours ? hours : 12; 
-    minutes = minutes < 10 ? '0'+minutes : minutes;
+    hours = hours ? hours : 12;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
     var strTime = hours + ':' + minutes + ' ' + ampm;
 
     const month = date.toLocaleString('default', { month: 'long' });
@@ -66,10 +67,10 @@ class App extends React.Component {
 
     return finalDateTime;
   }
-  
+
 
   postButton() {
-    
+
     var date = new Date();
 
     var post_key = date.getTime();//this.props.messages.length; using the length of the messages array is a bad idea (since 2 keys can be the same). Much better to use time in millis since 1970
@@ -86,7 +87,10 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <header className="container">
+
+        <CustomNavbar />
+
+        <header className="containerPost">
 
 
           <div className="card">
@@ -113,7 +117,7 @@ class App extends React.Component {
           </div>
 
           {
-            this.props.messages.map((message, index) => <Post messageContent={message.message} date={message.date} key={message.key} author={message.author} key_index={message.key}/>)
+            this.props.messages.map((message, index) => <Post messageContent={message.message} date={message.date} key={message.key} author={message.author} key_index={message.key} />)
           }
 
         </header>

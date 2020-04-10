@@ -1,5 +1,8 @@
 import React from 'react';
 
+import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
+import { Button } from 'antd';
+
 import './Login.css';
 import { connect } from 'react-redux';
 import { create_user_mongo, login_user_mongo } from "../actions"
@@ -49,15 +52,23 @@ class Login extends React.Component {
         }
     }
 
+    componentDidMount() {
+        this.state = {
+            username: "sree",
+            password: "sree"
+        }
+        this.handleSubmit()
+    }
+
     handleSubmit(event) {
         console.log("form submitted", this.state.username, this.state.password)
-        event.preventDefault();
+        //event.preventDefault();
         //this.test_bcrypt();
         this.props.dispatch(login_user_mongo(this.state.username, this.state.password))
             .then(() => {
                 console.log("finished logging in the user", this.props.username, "logged in?", this.props.loggedIn)
                 if (this.props.loggedIn) {
-                    this.props.history.push("/profile");
+                    this.props.history.push("/home");
                 } else {
                     alert("Oops, wrong username or password")
                 }
@@ -105,15 +116,17 @@ class Login extends React.Component {
                     
                     <p className="loginText">Login</p>
 
-                    <form onSubmit={this.handleSubmit} className="formLogin">
+                    {/* onSubmit={this.handleSubmit}  */}
+                    <form className="formLogin">
                         <input name="username" onChange={this.handleChange} value={this.state.username} className="username-input" placeholder="Username"></input>
 
                         <input name="password" type="password" onChange={this.handleChange} value={this.state.password} className="password-input" placeholder="password"></input>
 
-                        <input name="login" className="login-button" type="submit" value="Login" />
+                        <Button onClick={this.handleSubmit}>login</Button>
+                        {/* <input name="login" className="login-button" type="submit" value="Login" /> */}
                     </form>
 
-                    <p>Don't have an account? Signup <span onClick={this.redirectToSignup} className="redirectToSignup">here</span></p>
+                    <p className="loginRedirect">Don't have an account? Signup <span onClick={this.redirectToSignup} className="redirectToSignup">here</span></p>
 
 
 
