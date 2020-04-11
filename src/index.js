@@ -37,7 +37,7 @@ const initialState = {
   comment: "",
   username: "",
   loggedIn: false,
-  pictureName: ""
+  pictureName: "profile11.png"
 }
 
 //New reducer code is Immer.js
@@ -90,6 +90,10 @@ function reducer(state = initialState, action) {
       case LOGGING_IN_USER: {
         draft.username = action.username;
         draft.loggedIn = true;
+        
+        if (action.pictureName) { //on first login, this value will be undefined
+          draft.pictureName = action.pictureName;
+        }
         return draft;
       }
 

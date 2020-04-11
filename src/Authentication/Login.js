@@ -53,9 +53,11 @@ class Login extends React.Component {
     }
 
     componentDidMount() {
+
+        //for auto login
         this.state = {
-            username: "sree",
-            password: "sree"
+            username: "taara",
+            password: "taara"
         }
         this.handleSubmit()
     }

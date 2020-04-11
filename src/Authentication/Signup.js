@@ -55,7 +55,7 @@ class Signup extends React.Component {
     handleSubmit(event) {
         console.log("form submitted", this.state.username, this.state.password)
         event.preventDefault();
-        this.props.dispatch(create_user_mongo(this.state.username, this.state.password))
+        this.props.dispatch(create_user_mongo(this.state.username, this.state.password, "profile11.png"))
             .then(() => {
                 console.log("finished creating the user", this.props.username, "logged in?", this.props.loggedIn)
                 if (this.props.loggedIn) {

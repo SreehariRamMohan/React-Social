@@ -100,10 +100,11 @@ export function fetch_data_failure() {
 }
 
 
-export function log_in(username) {
+export function log_in(username, pictureName) {
     return {
         type: LOGGING_IN_USER,
-        username: username
+        username: username,
+        pictureName: pictureName
     }
 }
 
@@ -148,10 +149,11 @@ export function update_profile_picture_mongo(pictureName, username) {
     }
 }
 
-export function create_user_mongo(username, password) {
+export function create_user_mongo(username, password, pictureName) {
     let userObject = {
         "username": username,
-        "password": password
+        "password": password,
+        "pictureName": pictureName
     }
 
     return (dispatch) => {
@@ -178,7 +180,7 @@ export function login_user_mongo(username, password) {
                 console.log("response json", json.data);
 
                 if (json.data.success) {
-                    dispatch(log_in(username));
+                    dispatch(log_in(username, json.data.profilePicture));
                 } else {
                     dispatch(failed_log_in(username));
                 }

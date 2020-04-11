@@ -11,10 +11,12 @@ router.route('/').get((req, res) => {
 router.route('/add').post((req, res) => {
     const username = req.body.username;
     const password = req.body.password;
+    const pictureName = req.body.pictureName;
 
     const newUser = new User({
         username: username,
-        password: password
+        password: password,
+        pictureName: pictureName,
     });
 
     newUser.save()
@@ -50,6 +52,31 @@ router.route("/update/profile").post((req, res) => {
     });
 })
 
+router.route("/profile/").post((req, res) => {
+    const username = req.body.username;
+
+    console.log("here in axios get profile of username", username, "endpoint");
+
+    var query = User.findOne({username: username}, function(err, person) {
+        
+        console.log(person);
+        
+        var pictureName = person.pictureName;
+        
+        console.log(pictureName)
+        
+        let result = {
+            "pictureName": pictureName
+        }
+        
+        if(pictureName) {
+            res.json(result)
+        } else {
+            res.json(result)
+        }
+    })
+})
+
 router.route('/login').post((req, res) => {
     const username = req.body.username;
     const password = req.body.password;
@@ -72,7 +99,10 @@ router.route('/login').post((req, res) => {
             user.comparePassword(password, function (err, isMatch) {
                 //if (err) throw err;
                 console.log('is password a match?', isMatch); // -> Password123: true
-                res.json({ "success": isMatch })
+                res.json({ 
+                    "success": isMatch,
+                    "profilePicture": user.pictureName
+                })
             })
         }
 

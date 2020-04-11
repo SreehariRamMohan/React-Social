@@ -1,5 +1,8 @@
 import React from 'react';
 
+import {Button} from "react-bootstrap"
+
+
 import test_profile from "./res/userIcons/profile1.png"
 
 import './App.css';
@@ -19,7 +22,8 @@ function mapStateToProps(state) {
     messages: state.messages,
     message: state.message,
     username: state.username,
-    loggedIn: state.loggedIn
+    loggedIn: state.loggedIn,
+    pictureName: state.pictureName,
   };
 }
 
@@ -84,6 +88,7 @@ class App extends React.Component {
     this.props.dispatch(post_message_mongo(this.props.message, post_date, post_key, this.props.username));
   }
 
+
   render() {
     return (
       <div className="App">
@@ -94,10 +99,10 @@ class App extends React.Component {
 
 
           <div className="card">
-            <p>Create post</p>
+            <p className="appCreatePost">Create post</p>
 
             <div className="postContainer">
-              <img src={test_profile} className="profilePostApp" alt="profile"></img>
+              <img src={require(`./res/userIcons/${this.props.pictureName}`)} className="profilePostApp" alt="profile"></img>
               <textarea onChange={this.handleTextChange}
                 className="postInput"
                 value={this.props.message}
@@ -106,16 +111,11 @@ class App extends React.Component {
             </div>
 
             <div className="postButtonContainer">
-              <button
-                className="postButton"
-                onClick={this.postButton}
-              >Post</button>
+              <Button className="postButton" variant="outline-primary" onClick={this.postButton}>Post</Button>
             </div>
 
-
-
           </div>
-
+          
           {
             this.props.messages.map((message, index) => <Post messageContent={message.message} date={message.date} key={message.key} author={message.author} key_index={message.key} />)
           }
