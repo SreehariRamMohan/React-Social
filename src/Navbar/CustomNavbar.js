@@ -1,9 +1,18 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar, Nav, Form, Button } from "react-bootstrap"
 
 import {Link} from 'react-router-dom'
+
+
+function mapStateToProps(state) {
+    return {
+        username: state.username
+    };
+}
+
 
 class CustomNavbar extends React.Component {
 
@@ -18,6 +27,7 @@ class CustomNavbar extends React.Component {
                         <Nav.Link as={Link} to={"/profile"}>Profile</Nav.Link>
                     </Nav>
                     <Form inline>
+                        <Navbar.Brand>{this.props.username}</Navbar.Brand>
                         <Button as={Link} to={"/"} variant="outline-danger">Logout</Button>
                     </Form>
                 </Navbar.Collapse>
@@ -26,4 +36,4 @@ class CustomNavbar extends React.Component {
     }
 }
 
-export default CustomNavbar;
+export default connect(mapStateToProps, null)(CustomNavbar);

@@ -11,7 +11,8 @@
 5) navigate to localhost: 5000 in browser. Server endpoints are being served from localhost: 1080. 
 
 #### Features 
-* Post messages to a global message board. Write comments on other users posts. Each post is time/date stamped.
+* Post messages to a global message board. Write comments on other users posts.
+* Each user can customize their profile by choosing a profile picture. Displaying profile pictures next to posts & comments happens in async.
 * bcrypt hashing & salting algorithm for secure storage of passwords in MongoDB server.
 * Redux central state management for easy future updates + Redux state synced with MongoDB using Redux-Thunk async action updates.
 
@@ -25,5 +26,5 @@
 * bcrypt js => to securely hash & salt passwords
 
 #### License
-* Special thanks to Icons 8 for the profile picture icons. You can find the icons I used [here](https://icons8.com/icon/pack/profile/color)
+* Special thanks to Icons 8 for the profile picture icons. You can find the icons I used [here](https://icons8.com/icon/pack/profile/)
 

@@ -61,14 +61,15 @@
   .posterName {
     padding: 0em;
     margin: 0em;
-
     margin-bottom: 0.25rem;
+    font-size: 1.5rem;
   }
 
   .posterDate {
     padding: 0em;
     margin: 0em;
     color: darkgrey;
+    font-size: 1rem;
   }
 
   .commentPhoto {
