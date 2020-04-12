@@ -13,6 +13,7 @@ var bcrypt = require('bcryptjs');
 const saltRounds = 10;
 
 
+
 function mapStateToProps(state) {
     return {
         messages: state.messages,

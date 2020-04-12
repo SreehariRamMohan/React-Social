@@ -87,7 +87,7 @@ class Post extends React.Component {
     }
 
     asyncPullPostersProfilePicture() {
-        console.log("$$ Making axios call in post to determine", this.props.author + "'s", "choice of profile picture")
+        //console.log("$$ Making axios call in post to determine", this.props.author + "'s", "choice of profile picture")
 
         let querryUsername = {
             "username": this.props.author
@@ -95,7 +95,7 @@ class Post extends React.Component {
 
         axios.post("http://localhost:1080/user/profile/", querryUsername)
             .then((response) => {
-                console.log(response);
+                //console.log(response);
                 //dispatch(fetched_profile_picture(response.data))
 
                 if (response.data.pictureName) {

@@ -1,6 +1,6 @@
 .containerProfile {
     background-color: #ffffff;
-    min-height: 100vh;
+    min-height: 30vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -10,6 +10,21 @@
     padding-left: 3rem;
     padding-right: 3rem;
       
+  }
+
+  .containerCardPayments {
+    background-color: #ffffff;
+    min-height: 30vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    color: #000000;
+
+    padding-left: 3rem;
+    padding-right: 3rem;
+
+    margin-top: 3rem;
   }
 
   .profilePageText {

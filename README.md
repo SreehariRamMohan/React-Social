@@ -1,6 +1,6 @@
 #### Instructions for running:
 
-1) Create a .env file in the backend/ folder. Store your mongodb cloud atlas credentials here in the variable ATLAS_URI. 
+1) In the root directory, create a .env file to store your public stripe API key under the variable name REACT_APP_PUBLISHABLE_KEY. Note: the REACT_APP prefix in the aforementioned variable name is required for this value to be bundled in your build files and thus accessible in your JSX. Now, create a .env file in the backend/ folder. Store your mongodb cloud atlas credentials here in the variable ATLAS_URI and your stripe private API key here with the variable name STRIPE_SECRET_KEY. Alternatively (for testing purposes) if you don't mind exposing your API keys in the codebase, you can replaces all references of process.env.* with the corresponding API key (not recommended for security reasons).
 
 2) npm install in root directory and backend/ directory to install dependencies. 
 
@@ -24,6 +24,8 @@
 * React-Router => for navigation
 * Mongoose, MongoDB => for database integration
 * bcrypt js => to securely hash & salt passwords
+* Helmet js => secure HTTP headers
+* Stripe => to handle payments
 
 #### License
 * Special thanks to Icons 8 for the profile picture icons. You can find the icons I used [here](https://icons8.com/icon/pack/profile/)

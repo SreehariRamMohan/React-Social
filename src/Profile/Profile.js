@@ -3,16 +3,26 @@ import React from 'react';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import { Button } from 'antd';
 
-
 import './Profile.css';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Redirect, withRouter } from 'react-router-dom'
 
-import {update_profile_picture_mongo, update_profile_picture} from "../actions"
+import { update_profile_picture_mongo, update_profile_picture } from "../actions"
 
 import CustomNavbar from "../Navbar/CustomNavbar";
 
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+
+import CheckoutForm from "../StripeElements/CheckoutForm/CheckoutForm"
+
 var classNames = require('classnames');
+require('dotenv').config();
+
+
+
+const stripePromise = loadStripe(process.env.REACT_APP_PUBLISHABLE_KEY);
+
 
 function mapStateToProps(state) {
     return {
@@ -40,9 +50,9 @@ class Profile extends React.Component {
     }
 
     componentDidMount() {
-        if(!this.props.loggedIn) {
+        if (!this.props.loggedIn) {
             console.log("oops, you're not logged in :)", this.props.loggedIn, this.props.username)
-            //this.props.history.push("/");
+            this.props.history.push("/");
             return;
         }
     }
@@ -64,21 +74,21 @@ class Profile extends React.Component {
 
         return (
             <div key={index}
-            onClick={() => this.onClickProfilePicture(name)}
+                onClick={() => this.onClickProfilePicture(name)}
                 className=
                 {
-                classNames(
+                    classNames(
 
-                "profileWrapper", name, 
-                
-                {"hover": this.state.canSelectProfile},
-                
-                {"selectedNewProfile": this.state.selectedProfile === name}
-                
-                )
+                        "profileWrapper", name,
+
+                        { "hover": this.state.canSelectProfile },
+
+                        { "selectedNewProfile": this.state.selectedProfile === name }
+
+                    )
                 }
-                ><img 
-                src={picture} 
+            ><img
+                    src={picture}
                 /></div>
         );
 
@@ -101,10 +111,10 @@ class Profile extends React.Component {
 
     onClickProfilePicture(pictureName) {
 
-        if(!this.state.canSelectProfile) {
+        if (!this.state.canSelectProfile) {
             return;
         }
-        
+
         console.log("Clicked " + pictureName);
 
         this.setState({
@@ -116,32 +126,39 @@ class Profile extends React.Component {
 
     render() {
         return (
-            <div className="Profile">
+            <Elements stripe={stripePromise}>
+                <div className="Profile">
 
-                <CustomNavbar />
+                    <CustomNavbar />
 
-                <div className="containerProfile">
-                    <p className="profilePageText">Profile Page</p>
+                    <div className="containerProfile">
+                        <p className="profilePageText">Profile Page</p>
 
-                    <hr className="profileDivide"></hr>
+                        <hr className="profileDivide"></hr>
 
-                    <p>Change your user icon</p>
+                        <p>Change your user icon</p>
 
-                    <div className="profileGrid">
+                        <div className="profileGrid">
 
-                        {
-                            this.profilePhotosArray().map((name, index) => this.returnImageComponent(name, index))
-                        }
+                            {
+                                this.profilePhotosArray().map((name, index) => this.returnImageComponent(name, index))
+                            }
 
+                        </div>
+
+                        <div className="buttonBoxProfile">
+                            <Button onClick={this.resetSelection} shape="round">reset selection</Button>
+                            <Button onClick={this.confirmSelection} shape="round">confirm selection</Button>
+                        </div>
                     </div>
 
-                    <div className="buttonBoxProfile">
-                        <Button onClick={this.resetSelection} shape="round">reset selection</Button>
-                        <Button onClick={this.confirmSelection} shape="round">confirm selection</Button>
+                    <div className="containerCardPayments">
+                        <CheckoutForm />
                     </div>
+
 
                 </div>
-            </div>
+            </Elements>
 
         );
     }
