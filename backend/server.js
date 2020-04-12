@@ -24,10 +24,9 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const paymentIntent = stripe.paymentIntents.create({
   amount: 1099,
   currency: 'usd',
-  // Verify your integration in this guide by including this parameter
-  metadata: {integration_check: 'accept_a_payment'},
 })
-.then(result => {
+
+paymentIntent.then(result => {
   console.log(result)
 })
 
@@ -47,9 +46,11 @@ connection.once('open', () => {
 
 const postRouter = require("./routes/post");
 const userRouter = require("./routes/user");
+const paymentRouter = require("./routes/payment");
 
 app.use("/post", postRouter);
 app.use("/user", userRouter);
+app.use("/payment", paymentRouter);
 
 app.listen(port, () => {
     console.log(`\n*Server is running on port: ${port} \n`);

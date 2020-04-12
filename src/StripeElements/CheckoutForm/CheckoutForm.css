@@ -1,0 +1,16 @@
+.checkoutFormStyle {
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.buttonPayContainer {
+    width: 75vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 1rem;
+}

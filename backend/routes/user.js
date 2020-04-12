@@ -59,11 +59,11 @@ router.route("/profile/").post((req, res) => {
 
     var query = User.findOne({username: username}, function(err, person) {
         
-        console.log(person);
+        //console.log(person);
         
         var pictureName = person.pictureName;
         
-        console.log(pictureName)
+        //console.log(pictureName)
         
         let result = {
             "pictureName": pictureName

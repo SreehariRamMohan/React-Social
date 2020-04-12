@@ -21,8 +21,9 @@ require('dotenv').config();
 
 
 
-const stripePromise = loadStripe(process.env.REACT_APP_PUBLISHABLE_KEY);
+const stripePromise = loadStripe(process.env.REACT_APP_PUBLISHABLE_KEY)
 
+//console.log(stripePromise)
 
 function mapStateToProps(state) {
     return {
@@ -152,7 +153,10 @@ class Profile extends React.Component {
                         </div>
                     </div>
 
+
                     <div className="containerCardPayments">
+                        <p>Upgrade to become a premium user </p>
+
                         <CheckoutForm />
                     </div>
 
