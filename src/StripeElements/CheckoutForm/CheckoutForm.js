@@ -2,10 +2,21 @@ import React from 'react';
 import { ElementsConsumer, CardElement } from '@stripe/react-stripe-js';
 import CardSection from '../CardSection/CardSection';
 import { Button } from 'antd';
+import { connect } from 'react-redux';
+import { update_premium_user_status } from "../../actions"
 
 import "./CheckoutForm.css"
 
 const axios = require('axios');
+
+function mapStateToProps(state) {
+    return {
+        messages: state.messages,
+        message: state.message,
+        username: state.username,
+        loggedIn: state.loggedIn,
+    };
+}
 
 class CheckoutForm extends React.Component {
 
@@ -74,6 +85,8 @@ class CheckoutForm extends React.Component {
                                     loading: false,
                                     paymentMade: true
                                 })
+                                console.log("dispatching call to update status of premium in user", this.props.username)
+                                this.props.dispatch(update_premium_user_status(this.props.username, true))
                             }
                         }
                     })
@@ -97,12 +110,18 @@ class CheckoutForm extends React.Component {
     }
 }
 
-export default function InjectedCheckoutForm() {
-    return (
-        <ElementsConsumer>
-            {({ stripe, elements }) => (
-                <CheckoutForm stripe={stripe} elements={elements} />
-            )}
-        </ElementsConsumer>
-    );
-}
+export default connect(mapStateToProps, null)(CheckoutForm);
+
+// function InjectedCheckoutForm() {
+
+//     return (
+//         <ElementsConsumer>
+//             {({ stripe, elements }) => (
+//                 <CheckoutForm stripe={stripe} elements={elements}/>
+//             )}
+//         </ElementsConsumer>
+//     );
+// }
+
+
+// export default InjectedCheckoutForm;

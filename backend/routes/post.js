@@ -3,14 +3,14 @@ const router = require('express').Router();
 let Post = require('../models/post.model');
 
 router.route('/').get((req, res) => {
-  console.log("here in the axios endpoint call")
+ // console.log("here in the axios endpoint call")
   Post.find()
     .then(posts => res.json(posts))
     .catch(err => res.status(400).json("Error: " + err));
 });
 
 router.route('/fetch').get((req, res) => {
-  console.log("here in the axios endpoint call")
+  //console.log("here in the axios endpoint call")
 
   Post.find()
     .then(posts => res.json(posts))

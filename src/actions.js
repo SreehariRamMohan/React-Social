@@ -15,6 +15,8 @@ export const FAILED_TO_POST_COMMENT_TO_MONGO = "FAILED_TO_POST_COMMENT_TO_MONGO"
 export const FETCH_DATA_FAILURE_MONGO = "FETCH_DATA_FAILURE_MONGO"
 export const FAILED_TO_AUTHENTICATE_USER = "FAILED_TO_AUTHENTICATE_USER"
 export const UPDATE_PROFILE_PICTURE_CHOICE = "UPDATE_PROFILE_PICTURE_CHOICE"
+export const BECAME_PREMIUM_MEMBER = "BECAME_PREMIUM_MEMBER";
+export const FAILED_TO_UPDATE_PREMIUM_MEMBER_STATUS = "FAILED_TO_UPDATE_PREMIUM_MEMBER_STATUS"
 
 export function typed_message(message) {
     return {
@@ -132,6 +134,37 @@ export function failed_to_change_profile_picture(err) {
     return {
         type: "FAILED_TO_CHANGE_PROFILE_PICTURE",
         err: err
+    }
+}
+
+export function updated_premium_user(username) {
+    return {
+        type: BECAME_PREMIUM_MEMBER,
+        username: username
+    }
+}
+
+export function failed_to_update_premium_member_status(err) {
+    return {
+        type: FAILED_TO_UPDATE_PREMIUM_MEMBER_STATUS,
+        error: err
+    }
+}
+
+export function update_premium_user_status(username, isPremiumUser) {
+    let payload = {
+        "username": username,
+        "isPremiumUser": isPremiumUser
+    }
+
+    return (dispatch) => {
+        axios.post("http://localhost:1080/user/update/premium", payload)
+            .then(response => {
+                dispatch(updated_premium_user(username));
+            })
+            .catch(error => {
+                dispatch(failed_to_update_premium_member_status(error));
+            })
     }
 }
 

@@ -1,3 +1,6 @@
+##### Purpose
+Teaching myself core React & NodeJS web principles by creating a simple Facebook-esque Message Board.
+
 #### Instructions for running:
 
 1) In the root directory, create a .env file to store your public stripe API key under the variable name REACT_APP_PUBLISHABLE_KEY. Note: the REACT_APP prefix in the aforementioned variable name is required for this value to be bundled in your build files and thus accessible in your JSX. Now, create a .env file in the backend/ folder. Store your mongodb cloud atlas credentials here in the variable ATLAS_URI and your stripe private API key here with the variable name STRIPE_SECRET_KEY. Alternatively (for testing purposes) if you don't mind exposing your API keys in the codebase, you can replaces all references of process.env.* with the corresponding API key (not recommended for security reasons).
