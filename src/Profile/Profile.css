@@ -12,6 +12,10 @@
       
   }
 
+  .profileFormText {
+    width: 60vw;
+  }
+
   .containerCardPayments {
     background-color: #ffffff;
     min-height: 30vh;

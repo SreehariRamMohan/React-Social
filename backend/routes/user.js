@@ -17,13 +17,60 @@ router.route('/add').post((req, res) => {
         username: username,
         password: password,
         pictureName: pictureName,
-        isPremiumUser: false
+        isPremiumUser: false,
+        email: "",
+        bio: "",
+        gender: ""
     });
 
     newUser.save()
         .then(() => res.json({ "status": "User added!" }))
         .catch(err => res.status(400).json("Error: " + err));
 });
+
+router.route("/update/personal").post((req, res) => {
+    const usernameReference = req.body.usernameReference;
+    const type = req.body.type;
+    const information = req.body.information;
+
+    console.log("Here trying to update personal information", usernameReference, type, information);
+
+    User.findOne({username: usernameReference}, function(err, user) {
+        if(!user) {
+            throw err
+        }
+
+        switch(type) {
+            case "UPDATE_USERNAME":
+                user.username = information;
+                break;
+            case "UPDATE_EMAIL":
+                user.email = information;
+                break;
+            case "UPDATE_BIO":
+                user.bio = information;
+                break;
+            case "UPDATE_GENDER": 
+                user.gender = information;
+                break;
+            default:
+                console.log(type, information);
+        }
+
+        user.save();
+    })
+    .then(result => {
+        res.json({
+            "status": "updated"
+        })
+    })
+    .catch(error => {
+        console.log(error);
+        res.json({
+            "status": "error"
+        })
+    })
+})
 
 router.route("/update/premium").post((req, res) => {
     const username = req.body.username;

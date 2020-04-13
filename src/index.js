@@ -6,7 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 
-import { UPDATE_PROFILE_PICTURE_CHOICE, LOGGING_IN_USER, TYPING, PUBLISH_POST, CLEAR_MESSAGE, PUBLISH_COMMENT, FETCH_DATA_SUCCESS_MONGO} from "./actions"
+import {UPDATE_USERNAME, UPDATE_EMAIL, UPDATE_BIO, UPDATE_GENDER, UPDATE_PROFILE_PICTURE_CHOICE, LOGGING_IN_USER, TYPING, PUBLISH_POST, CLEAR_MESSAGE, PUBLISH_COMMENT, FETCH_DATA_SUCCESS_MONGO} from "./actions"
 
 import { enableAllPlugins } from "immer"
 import produce from "immer"
@@ -99,6 +99,26 @@ function reducer(state = initialState, action) {
 
       case UPDATE_PROFILE_PICTURE_CHOICE: {
         draft.pictureName = action.pictureName;
+        return draft;
+      }
+
+      case UPDATE_USERNAME: {
+        draft.username = action.information;
+        return draft;
+      }
+
+      case UPDATE_EMAIL: {
+        draft.email = action.information;
+        return draft;
+      }
+
+      case UPDATE_GENDER: {
+        draft.gender = action.information;
+        return draft;
+      }
+
+      case UPDATE_BIO: {
+        draft.bio = action.information;
         return draft;
       }
 

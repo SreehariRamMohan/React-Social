@@ -18,6 +18,11 @@ export const UPDATE_PROFILE_PICTURE_CHOICE = "UPDATE_PROFILE_PICTURE_CHOICE"
 export const BECAME_PREMIUM_MEMBER = "BECAME_PREMIUM_MEMBER";
 export const FAILED_TO_UPDATE_PREMIUM_MEMBER_STATUS = "FAILED_TO_UPDATE_PREMIUM_MEMBER_STATUS"
 
+export const UPDATE_USERNAME = "UPDATE_USERNAME";
+export const UPDATE_GENDER = "UPDATE_GENDER";
+export const UPDATE_EMAIL = "UPDATE_EMAIL";
+export const UPDATE_BIO = "UPDATE_BIO";
+
 export function typed_message(message) {
     return {
         type: TYPING,
@@ -148,6 +153,44 @@ export function failed_to_update_premium_member_status(err) {
     return {
         type: FAILED_TO_UPDATE_PREMIUM_MEMBER_STATUS,
         error: err
+    }
+}
+
+export function updated_personal_information() {
+    return {
+        type: "UPDATED_PERSONAL_INFORMATION"
+    }
+}
+
+export function failed_to_update_personal_information() {
+    return {
+        type: "FAILED_TO_UPDATE_PERSONAL_INFORMATION"
+    }
+}
+
+export function update_personal_information(type, information){
+    return {
+        type: type,
+        information: information
+    }
+}
+export function update_personal_information_mongo(usernameReference, type, information){
+    let payload = {
+        usernameReference: usernameReference, //current username reference, even if we're changing it now - we need to find the document somehow right
+        type: type,
+        information: information,
+    }
+
+    return (dispatch) => {
+        axios.post("http://localhost:1080/user/update/personal", payload) 
+        .then(response => {
+            console.log("successfully updated personal information", response)
+            dispatch(updated_personal_information());
+        })
+        .catch(error => {
+            dispatch(failed_to_update_personal_information());
+            console.log("failed to updated personal information", error)
+        })
     }
 }
 

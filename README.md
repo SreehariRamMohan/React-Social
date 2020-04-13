@@ -1,4 +1,4 @@
-##### Purpose
+#### Purpose
 Teaching myself core React & NodeJS web principles by creating a simple Facebook-esque Message Board.
 
 #### Instructions for running:

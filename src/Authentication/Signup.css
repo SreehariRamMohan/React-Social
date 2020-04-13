@@ -20,7 +20,7 @@
   }
 
   .signupText {
-      font-size: 1rem;
+    font-size: 2rem !important;
   }
 
   .username-input {

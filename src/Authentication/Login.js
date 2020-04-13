@@ -57,11 +57,11 @@ class Login extends React.Component {
 
         //for auto login
 
-        this.state = {
-            username: "taara",
-            password: "taara"
-        }
-        this.handleSubmit()
+        // this.state = {
+        //     username: "taara",
+        //     password: "taara"
+        // }
+        // this.handleSubmit()
     }
 
     handleSubmit(event) {

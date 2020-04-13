@@ -9,7 +9,11 @@ const userSchema = new Schema({
     username: {type: String, unique: true},
     password: String,
     pictureName: String,
-    isPremiumUser: Boolean
+    isPremiumUser: Boolean,
+    
+    email: String,
+    gender: String,
+    bio: String
 });
 
 

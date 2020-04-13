@@ -1,22 +1,15 @@
 import React from 'react';
-
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import { Button } from 'antd';
-
 import './Profile.css';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Redirect, withRouter } from 'react-router-dom'
-
-import { update_profile_picture_mongo, update_profile_picture, update_premium_user_status } from "../actions"
-
 import CustomNavbar from "../Navbar/CustomNavbar";
-
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-
 import CheckoutForm from "../StripeElements/CheckoutForm/InjectedCheckoutForm"
-
-import {Form} from "react-bootstrap"
+import { Form, Spinner, Button as BootstrapButton } from "react-bootstrap"
+import {UPDATE_USERNAME, UPDATE_GENDER, UPDATE_EMAIL, UPDATE_BIO, update_personal_information, update_personal_information_mongo, update_profile_picture_mongo, update_profile_picture} from "../actions"
 
 var classNames = require('classnames');
 require('dotenv').config();
@@ -43,12 +36,21 @@ class Profile extends React.Component {
 
         this.state = {
             canSelectProfile: true,
-            selectedProfile: ""
+            selectedProfile: "",
+            saved: false
         }
+
+        this.username = React.createRef();
+        this.gender = React.createRef();
+        this.email = React.createRef();
+        this.bio = React.createRef();
+        
+
 
         this.onClickProfilePicture = this.onClickProfilePicture.bind(this);
         this.confirmSelection = this.confirmSelection.bind(this);
         this.resetSelection = this.resetSelection.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
 
     }
 
@@ -127,6 +129,32 @@ class Profile extends React.Component {
 
     }
 
+    onSubmit(event) {
+
+        event.preventDefault();
+
+        console.log("profile form details submitted", this.username.current.value, this.email.current.value, this.gender.current.value, this.bio.current.value)
+        
+
+        this.props.dispatch(update_personal_information(UPDATE_USERNAME, this.username.current.value));
+        this.props.dispatch(update_personal_information_mongo(this.props.username, UPDATE_USERNAME, this.username.current.value))
+        
+        this.props.dispatch(update_personal_information(UPDATE_EMAIL, this.email.current.value));
+        this.props.dispatch(update_personal_information_mongo(this.props.username, UPDATE_EMAIL, this.email.current.value));
+    
+        // this.props.dispatch(update_personal_information(UPDATE_BIO, this.bio.current.value));
+        // this.props.dispatch(update_personal_information_mongo(UPDATE_BIO, this.bio.current.value));
+        
+        // this.props.dispatch(update_personal_information(UPDATE_GENDER, this.gender.current.value));
+        // this.props.dispatch(update_personal_information_mongo(UPDATE_GENDER, this.gender.current.value));
+                
+    
+    }
+
+    handleChange(event) {
+        console.log(event.target.name, event.target.value)
+    }
+
     render() {
         return (
             <Elements stripe={stripePromise}>
@@ -141,40 +169,36 @@ class Profile extends React.Component {
 
                         <p className="perkHeaderText">Personal Information</p>
 
-
-                        <input value={this.props.username}></input>
-                        <textarea placeholder="your bio..."></textarea>
-
-
-                        <Form>
-                            <Form.Group controlId="exampleForm.ControlInput1">
-                                <Form.Label>Email address</Form.Label>
-                                <Form.Control type="email" placeholder="name@example.com" />
+                        <Form className="profileFormText">
+                            <Form.Group controlId="nameControl">
+                                <Form.Label>Name: </Form.Label>
+                                <Form.Control name="name" onChange={this.handleChange} ref={this.username} type="text" placeholder={this.props.username} />
                             </Form.Group>
+                            
                             <Form.Group controlId="exampleForm.ControlSelect1">
-                                <Form.Label>Example select</Form.Label>
-                                <Form.Control as="select">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
+                                <Form.Label>Gender</Form.Label>
+                                <Form.Control name="gender" as="select" ref={this.gender} onChange={this.handleChange}>
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                    <option>Non-binary</option>
                                 </Form.Control>
                             </Form.Group>
-                            <Form.Group controlId="exampleForm.ControlSelect2">
-                                <Form.Label>Example multiple select</Form.Label>
-                                <Form.Control as="select" multiple>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                </Form.Control>
+
+                            <Form.Group controlId="emailControl">
+                                <Form.Label>Email: </Form.Label>
+                                <Form.Control name="email" onChange={this.handleChange} ref={this.email} type="email" placeholder="name@example.com" onChange={this.handleChange} />
                             </Form.Group>
-                            <Form.Group controlId="exampleForm.ControlTextarea1">
-                                <Form.Label>Example textarea</Form.Label>
-                                <Form.Control as="textarea" rows="3" />
+                            <Form.Group controlId="textAreaControl">
+                                <Form.Label>Bio</Form.Label>
+                                <Form.Control name="bio" onChange={this.handleChange} ref={this.bio} as="textarea" rows="3" placeholder="Write a little about yourself..." />
                             </Form.Group>
+                            <BootstrapButton variant="primary" type="submit" onClick={this.onSubmit}>
+                                {!this.state.saved
+                                    ? <Spinner animation="border" size="sm" /> 
+                                    : null
+                                }
+                                <span>{this.state.saved ? "Saved" : " Saving"}</span>
+                            </BootstrapButton>
                         </Form>
 
 
@@ -198,7 +222,7 @@ class Profile extends React.Component {
                     <div className="containerCardPayments">
                         <p className="perkHeaderText">Upgrade to become a premium user</p>
 
-                        <p>A membership fee of $10.00 allows you to view the people who liked posts on React Social</p>
+                        <p>A membership fee of $10.00/hour allows you to search for friends on React-Social!</p>
 
                         <CheckoutForm />
                     </div>
