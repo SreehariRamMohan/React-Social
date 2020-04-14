@@ -57,11 +57,11 @@ class Login extends React.Component {
 
         //for auto login
 
-        // this.state = {
-        //     username: "taara",
-        //     password: "taara"
-        // }
-        // this.handleSubmit()
+        this.state = {
+            username: "sree",
+            password: "sree"
+        }
+        this.handleSubmit()
     }
 
     handleSubmit(event) {
@@ -73,6 +73,8 @@ class Login extends React.Component {
                 console.log("finished logging in the user", this.props.username, "logged in?", this.props.loggedIn)
                 if (this.props.loggedIn) {
                     this.props.history.push("/home");
+                    this.props.history.push("/profile");
+
                 } else {
                     alert("Oops, wrong username or password")
                 }

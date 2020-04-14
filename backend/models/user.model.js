@@ -10,7 +10,6 @@ const userSchema = new Schema({
     password: String,
     pictureName: String,
     isPremiumUser: Boolean,
-    
     email: String,
     gender: String,
     bio: String

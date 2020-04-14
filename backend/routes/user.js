@@ -177,7 +177,11 @@ router.route('/login').post((req, res) => {
                 console.log('is password a match?', isMatch); // -> Password123: true
                 res.json({ 
                     "success": isMatch,
-                    "profilePicture": user.pictureName
+                    "profilePicture": user.pictureName,
+                    "bio": user.bio,
+                    "email": user.email,
+                    "gender": user.gender,
+                    "isPremiumUser": user.isPremiumUser
                 })
             })
         }

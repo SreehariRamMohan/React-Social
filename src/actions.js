@@ -106,15 +106,6 @@ export function fetch_data_failure() {
     }
 }
 
-
-export function log_in(username, pictureName) {
-    return {
-        type: LOGGING_IN_USER,
-        username: username,
-        pictureName: pictureName
-    }
-}
-
 export function failed_log_in(username) {
     return {
         type: FAILED_TO_AUTHENTICATE_USER,
@@ -244,6 +235,18 @@ export function create_user_mongo(username, password, pictureName) {
     }
 }
 
+export function log_in(username, data) {
+    return {
+        type: LOGGING_IN_USER,
+        username: username,
+        pictureName: data.profilePicture,
+        bio: data.bio,
+        email: data.email,
+        gender: data.gender,
+        isPremiumUser: data.isPremiumUser,
+    }
+}
+
 export function login_user_mongo(username, password) {
     let userObject = {
         "username": username,
@@ -256,7 +259,7 @@ export function login_user_mongo(username, password) {
                 console.log("response json", json.data);
 
                 if (json.data.success) {
-                    dispatch(log_in(username, json.data.profilePicture));
+                    dispatch(log_in(username, json.data));
                 } else {
                     dispatch(failed_log_in(username));
                 }

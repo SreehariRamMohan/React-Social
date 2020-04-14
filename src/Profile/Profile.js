@@ -26,6 +26,10 @@ function mapStateToProps(state) {
         message: state.message,
         username: state.username,
         loggedIn: state.loggedIn,
+        email: state.email,
+        bio: state.bio,
+        gender: state.gender,
+
     };
 }
 
@@ -37,20 +41,23 @@ class Profile extends React.Component {
         this.state = {
             canSelectProfile: true,
             selectedProfile: "",
-            saved: false
+            
+            saved: true, // form has 3 states: unsaved, saving, saved (represented by these two props)
+            saving: false,
         }
+
+        this.timeoutId = null;
 
         this.username = React.createRef();
         this.gender = React.createRef();
         this.email = React.createRef();
         this.bio = React.createRef();
         
-
-
         this.onClickProfilePicture = this.onClickProfilePicture.bind(this);
         this.confirmSelection = this.confirmSelection.bind(this);
         this.resetSelection = this.resetSelection.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
 
     }
 
@@ -60,6 +67,12 @@ class Profile extends React.Component {
             this.props.history.push("/");
             return;
         }
+        
+        this.username.current.value = this.props.username;
+        this.email.current.value = this.props.email;
+        this.gender.current.value = this.props.gender;
+        this.bio.current.value = this.props.bio;
+
     }
 
     profilePhotosArray() {
@@ -131,27 +144,58 @@ class Profile extends React.Component {
 
     onSubmit(event) {
 
-        event.preventDefault();
+        if (event != null) {
+            event.preventDefault();
+        }
+        
+        this.setState({
+            saved: false,
+            saving: true
+        })
 
         console.log("profile form details submitted", this.username.current.value, this.email.current.value, this.gender.current.value, this.bio.current.value)
-        
-
-        this.props.dispatch(update_personal_information(UPDATE_USERNAME, this.username.current.value));
+    
+        this.props.dispatch(update_personal_information(UPDATE_USERNAME, this.username.current.value))
         this.props.dispatch(update_personal_information_mongo(this.props.username, UPDATE_USERNAME, this.username.current.value))
         
         this.props.dispatch(update_personal_information(UPDATE_EMAIL, this.email.current.value));
         this.props.dispatch(update_personal_information_mongo(this.props.username, UPDATE_EMAIL, this.email.current.value));
     
-        // this.props.dispatch(update_personal_information(UPDATE_BIO, this.bio.current.value));
-        // this.props.dispatch(update_personal_information_mongo(UPDATE_BIO, this.bio.current.value));
+        this.props.dispatch(update_personal_information(UPDATE_BIO, this.bio.current.value));
+        this.props.dispatch(update_personal_information_mongo(this.props.username, UPDATE_BIO, this.bio.current.value));
         
-        // this.props.dispatch(update_personal_information(UPDATE_GENDER, this.gender.current.value));
-        // this.props.dispatch(update_personal_information_mongo(UPDATE_GENDER, this.gender.current.value));
-                
+        this.props.dispatch(update_personal_information(UPDATE_GENDER, this.gender.current.value));
+        this.props.dispatch(update_personal_information_mongo(this.props.username, UPDATE_GENDER, this.gender.current.value));
+            
+        this.setState({
+            saved: true, 
+            saving: false
+        })
     
     }
 
     handleChange(event) {
+        
+        //autosave form 0.5 seconds after the last change is logged.
+
+        this.setState({
+            saved: false,
+            saving: true
+        }) //when a change comes in, we are unsaved, and are not currently saving.
+
+        if(this.timeoutId) {
+            clearTimeout(this.timeoutId);
+            this.timeoutId = null;
+        }
+
+        this.timeoutId = setTimeout(() => {
+            this.onSubmit(null);
+            this.setState({
+                saved: true,
+                saving: false
+            })
+        }, 500); 
+
         console.log(event.target.name, event.target.value)
     }
 
@@ -172,7 +216,7 @@ class Profile extends React.Component {
                         <Form className="profileFormText">
                             <Form.Group controlId="nameControl">
                                 <Form.Label>Name: </Form.Label>
-                                <Form.Control name="name" onChange={this.handleChange} ref={this.username} type="text" placeholder={this.props.username} />
+                                <Form.Control name="name" onChange={this.handleChange} ref={this.username} type="text" placeholder="Micheal Scott" />
                             </Form.Group>
                             
                             <Form.Group controlId="exampleForm.ControlSelect1">
@@ -193,11 +237,15 @@ class Profile extends React.Component {
                                 <Form.Control name="bio" onChange={this.handleChange} ref={this.bio} as="textarea" rows="3" placeholder="Write a little about yourself..." />
                             </Form.Group>
                             <BootstrapButton variant="primary" type="submit" onClick={this.onSubmit}>
-                                {!this.state.saved
+                                {this.state.saving
                                     ? <Spinner animation="border" size="sm" /> 
                                     : null
                                 }
-                                <span>{this.state.saved ? "Saved" : " Saving"}</span>
+                                <span>{this.state.saved ? "Saved" : 
+                                
+                                        this.state.saving ? " Saving" : "Click to Save"
+    
+                                }</span>
                             </BootstrapButton>
                         </Form>
 
