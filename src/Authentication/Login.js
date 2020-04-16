@@ -73,7 +73,7 @@ class Login extends React.Component {
                 console.log("finished logging in the user", this.props.username, "logged in?", this.props.loggedIn)
                 if (this.props.loggedIn) {
                     this.props.history.push("/home");
-                    this.props.history.push("/profile");
+
 
                 } else {
                     alert("Oops, wrong username or password")
@@ -119,24 +119,25 @@ class Login extends React.Component {
             <div className="Login">
 
                 <div className="containerLogin">
-                    
-                    <p className="loginText">Login</p>
+                    <div className="loginCard">
 
-                    {/* onSubmit={this.handleSubmit}  */}
-                    <form className="formLogin">
-                        <input name="username" onChange={this.handleChange} value={this.state.username} className="username-input" placeholder="Username"></input>
+                        <p className="loginText">Login</p>
 
-                        <input name="password" type="password" onChange={this.handleChange} value={this.state.password} className="password-input" placeholder="password"></input>
+                        {/* onSubmit={this.handleSubmit}  */}
+                        <form className="formLogin">
+                            <input name="username" onChange={this.handleChange} value={this.state.username} className="username-input" placeholder="Username"></input>
 
-                        <Button onClick={this.handleSubmit}>login</Button>
-                        {/* <input name="login" className="login-button" type="submit" value="Login" /> */}
-                    </form>
+                            <input name="password" type="password" onChange={this.handleChange} value={this.state.password} className="password-input" placeholder="password"></input>
 
-                    <p className="loginRedirect">Don't have an account? Signup <span onClick={this.redirectToSignup} className="redirectToSignup">here</span></p>
+                            <Button onClick={this.handleSubmit}>login</Button>
+                            {/* <input name="login" className="login-button" type="submit" value="Login" /> */}
+                        </form>
 
+                        <p className="loginRedirect">Don't have an account? Signup <span onClick={this.redirectToSignup} className="redirectToSignup">here</span></p>
 
-
+                    </div>
                 </div>
+
 
 
 

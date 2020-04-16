@@ -9,6 +9,20 @@
     color: #000000;
     padding-left: 3em;
     padding-right: 3em;
+    background-color: #0e507c;
+  }
+
+  .loginCard {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: left;
+    padding: 1em;
+    width: 50%;
+    border-radius: 5rem;
+    background-color: #ffffff;
   }
 
   .formLogin {

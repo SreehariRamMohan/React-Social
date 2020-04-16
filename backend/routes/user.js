@@ -12,15 +12,17 @@ router.route('/add').post((req, res) => {
     const username = req.body.username;
     const password = req.body.password;
     const pictureName = req.body.pictureName;
+    const email = req.body.email;
+    const gender = req.body.gender;
 
     const newUser = new User({
         username: username,
         password: password,
         pictureName: pictureName,
         isPremiumUser: false,
-        email: "",
+        email: email,
         bio: "",
-        gender: ""
+        gender: gender
     });
 
     newUser.save()
@@ -177,7 +179,7 @@ router.route('/login').post((req, res) => {
                 console.log('is password a match?', isMatch); // -> Password123: true
                 res.json({ 
                     "success": isMatch,
-                    "profilePicture": user.pictureName,
+                    "pictureName": user.pictureName,
                     "bio": user.bio,
                     "email": user.email,
                     "gender": user.gender,

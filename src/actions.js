@@ -216,17 +216,21 @@ export function update_profile_picture_mongo(pictureName, username) {
     }
 }
 
-export function create_user_mongo(username, password, pictureName) {
+export function create_user_mongo(username, password, pictureName, gender, email) {
     let userObject = {
         "username": username,
         "password": password,
-        "pictureName": pictureName
+        "pictureName": pictureName,
+        "gender": gender, 
+        "email": email,
+        "bio": "",
+        "isPremiumUser": false
     }
 
     return (dispatch) => {
         return axios.post("http://localhost:1080/user/add", userObject)
             .then(json => {
-                dispatch(log_in(username));
+                dispatch(log_in(username, userObject));
             })
             .catch(error => {
                 console.log(error);
@@ -239,7 +243,7 @@ export function log_in(username, data) {
     return {
         type: LOGGING_IN_USER,
         username: username,
-        pictureName: data.profilePicture,
+        pictureName: data.pictureName,
         bio: data.bio,
         email: data.email,
         gender: data.gender,
